@@ -1,12 +1,57 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { FC, useEffect } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import classes from './app.module.scss';
+import Auth from './components/auth/auth/auth';
+import Navbar from './components/navbar/navbar';
+import { useSelector } from "react-redux";
+import { RootStateType } from './store/store';
+import Loader from './components/loader/loader';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { displayErrorNotification } from './utils/utils';
+import { useAppDispatch, useAppSelector } from './hooks/hooks';
+import { setUserError } from './store/redux/users/actionUsers';
 
-function App() {
+const App: FC = () => {
+  const loading = useSelector<RootStateType, boolean>(state => state.users.isLoading)
+  const userError = useAppSelector(state => state.users.errorMessage) 
+  const dispatch = useAppDispatch()
+  
+
+  useEffect(() => {
+    if (userError) {
+      displayErrorNotification(userError)
+      dispatch(setUserError(""))
+    }
+  },[userError])
   return (
-    <div className="App">
-      Hello
-    </div>
+    <BrowserRouter>
+      <div className={classes.app}>
+        <Navbar loading={loading} />
+        {
+          !loading ? (
+            <Routes>
+              <Route path="/registration" element={<Auth title={"New User"} btnName={"Register"} />} />
+              <Route path="/login" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
+            </Routes>
+          ) : (
+            <Loader />
+          )
+        }
+        <ToastContainer
+          position="top-right"
+          autoClose={2500}
+          hideProgressBar
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnHover
+        />
+
+      </div>
+    </BrowserRouter>
+
   );
 }
 
