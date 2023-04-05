@@ -1,5 +1,6 @@
 import Router from 'express'
 import User from '../models/User.js'
+import File from '../models/File.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { check, validationResult } from 'express-validator'
@@ -8,6 +9,8 @@ import { authMiddleware } from '../middlwares/middlwares.js'
 const SECRET_KEY = config.get('secretWord')
 const EXPIRES = config.get('expiresIn')
 const router = new Router()
+import fileService from '../services/fileService.js'
+
 
 
 router.post('/registration', [
@@ -19,7 +22,7 @@ router.post('/registration', [
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
-   return res.status(400).json({ message: "Uncorrect request", errors })
+   return res.status(400).json({ message: "Wrong request", errors })
   }
   const { email, password } = req.body
 
@@ -30,12 +33,14 @@ router.post('/registration', [
   }
 
   const hashedPassword = await bcrypt.hash(password, 15)
-  const user = new User({ email, password: hashedPassword })
+  const user =  new User({ email, password: hashedPassword })
   await user.save()
+  await fileService.createDir(new File({user: user.id, name: ""}))
   return res.json({ message: "User created" })
  }
  catch (e) {
-  return res.json({ message: e.res.data.message })
+  console.log(e,"eeee")
+  return res.json({ message: e})
  }
 })
 

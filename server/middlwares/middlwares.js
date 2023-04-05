@@ -27,5 +27,4 @@ export const authMiddleware = async(req, res, next) => {
   console.log(e, "error")
   //return res.json({ message: e.res.data.message })
  }
- next()
 }
