@@ -11,34 +11,42 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { displayErrorNotification } from './utils/utils';
 import { useAppDispatch, useAppSelector } from './hooks/hooks';
-import { setUserError } from './store/redux/users/actionUsers';
+import { fetchInitAuth, setUserError } from './store/redux/users/actionUsers';
 
 const App: FC = () => {
-  const loading = useSelector<RootStateType, boolean>(state => state.users.isLoading)
+  const loading = useAppSelector(state => state.users.isLoading)
   const userError = useAppSelector(state => state.users.errorMessage) 
+  const isAuth = useAppSelector(state => state.users.isAuth)
   const dispatch = useAppDispatch()
-  
 
   useEffect(() => {
     if (userError) {
       displayErrorNotification(userError)
       dispatch(setUserError(""))
     }
-  },[userError])
+  }, [userError])
+  
+  useEffect(() => {
+   dispatch(fetchInitAuth()) 
+  }, [])
+  
   return (
     <BrowserRouter>
       <div className={classes.app}>
         <Navbar loading={loading} />
-        {
-          !loading ? (
-            <Routes>
-              <Route path="/registration" element={<Auth title={"New User"} btnName={"Register"} />} />
-              <Route path="/login" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
-            </Routes>
-          ) : (
-            <Loader />
-          )
-        }
+        { !isAuth && 
+          <>
+            {
+              !loading ? (
+                <Routes>
+                  <Route path="/registration" element={<Auth title={"New User"} btnName={"Register"} />} />
+                  <Route path="/login" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
+                </Routes>
+              ) : (
+                <Loader />
+              )
+            }
+          </>} 
         <ToastContainer
           position="top-right"
           autoClose={2500}

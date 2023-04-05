@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { check, validationResult } from 'express-validator'
 import config from 'config'
+import { authMiddleware } from '../middlwares/middlwares.js'
 const SECRET_KEY = config.get('secretWord')
 const EXPIRES = config.get('expiresIn')
 const router = new Router()
@@ -38,15 +39,13 @@ router.post('/registration', [
  }
 })
 
+
 router.post('/login', [
-
-], async (req, res) => {
+ check('email', "Wrong email").isEmail(),
+ check('password', 'Password must at least 5 symbols').isLength({ min: 5 })], async (req, res) => {
  try {
-
   const { email, password } = req.body
-  const user = await User.findOne({ email })
-
-
+  const user = await User.findOne({email})
   if (!user) {
    return res.status(404).json({ message: "User not found" })
   }
@@ -70,6 +69,29 @@ router.post('/login', [
  catch (e) {
   console.log(e)
   res.send({ message: "server error" })
+ }
+})
+
+router.get('/auth', authMiddleware, async (req, res) => {
+ try {
+  const user = await User.findOne({_id: req.user.id })
+  if (!user) {
+   console.log("ererereerererererererer")
+   return res.status(404).json({ message: "User not found" })
+  }
+
+  const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: EXPIRES })
+  const { diskSpace, id, usedSpace, files } = user
+  return res.json({
+   message: "Logged in",
+   token,
+   expiresIn: new Date(new Date().setDate(new Date().getDate() + +EXPIRES[0])),
+   user_data: { email, diskSpace, id, usedSpace, files }
+  })
+
+ }
+ catch (e) {
+  res.json({ message: "server error" })
  }
 })
 
