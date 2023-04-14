@@ -5,12 +5,12 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { check, validationResult } from 'express-validator'
 import config from 'config'
-import { authMiddleware } from '../middlwares/middlwares.js'
-const SECRET_KEY = config.get('secretWord')
 const EXPIRES = config.get('expiresIn')
+const SECRET_KEY = config.get('secretWord')
+import { authMiddleware } from '../middlwares/middlwares.js'
 const router = new Router()
 import fileService from '../services/fileService.js'
-
+const expiresIn = new Date(new Date().setDate(new Date().getDate() + +EXPIRES[0]))
 
 
 router.post('/registration', [
@@ -39,7 +39,6 @@ router.post('/registration', [
   return res.json({ message: "User created" })
  }
  catch (e) {
-  console.log(e,"eeee")
   return res.json({ message: e})
  }
 })
@@ -48,6 +47,7 @@ router.post('/registration', [
 router.post('/login', [
  check('email', "Wrong email").isEmail(),
  check('password', 'Password must at least 5 symbols').isLength({ min: 5 })], async (req, res) => {
+ console.log("login")
  try {
   const { email, password } = req.body
   const user = await User.findOne({email})
@@ -66,7 +66,7 @@ router.post('/login', [
   return res.json({
    message: "Logged in",
    token,
-   expiresIn: new Date(new Date().setDate(new Date().getDate() + +EXPIRES[0])),
+   expiresIn,
    user_data: { email, diskSpace, id, usedSpace, files }
   })
 
@@ -78,19 +78,21 @@ router.post('/login', [
 })
 
 router.get('/auth', authMiddleware, async (req, res) => {
+ console.log("auth")
  try {
   const user = await User.findOne({_id: req.user.id })
   if (!user) {
-   console.log("ererereerererererererer")
    return res.status(404).json({ message: "User not found" })
   }
 
   const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: EXPIRES })
   const { diskSpace, id, usedSpace, files } = user
+  
+
   return res.json({
    message: "Logged in",
    token,
-   expiresIn: new Date(new Date().setDate(new Date().getDate() + +EXPIRES[0])),
+   expiresIn,
    user_data: { email, diskSpace, id, usedSpace, files }
   })
 

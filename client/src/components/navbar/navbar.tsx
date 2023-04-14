@@ -1,15 +1,17 @@
 import { FC } from "react"
 import classes from './navbar.module.scss'
 import Logo from '../../assets/images/logo.svg'
-import { NavLink } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks"
 import { setLogout } from "../../store/redux/users/actionUsers"
 
 const Navbar: FC<{ loading: boolean }> = ({ loading }) => {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const isAuth = useAppSelector(state => state.users.isAuth)
  const onLogout = () => {
-  dispatch(setLogout())
+   dispatch(setLogout())
+   navigate("/login")
  }
  return (
   <nav

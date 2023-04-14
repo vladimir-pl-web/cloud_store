@@ -9,10 +9,6 @@ const rootReducer = combineReducers({
  files: fileReducer
 })
 
-// export type RootState = ReturnType<typeof rootReducer>
-// export type AppDispatch = typeof store.dispatch
-// type rootReducerType = typeof rootReducer;
-// export type RootStateType = ReturnType<rootReducerType>;
 export type RootStateType = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 export type AppThunk<ReturnType = void> = ThunkAction<

@@ -14,7 +14,7 @@ export const authMiddleware = async(req, res, next) => {
  try {
   const token = req.headers.authorization.split(" ")[1]
   if (token === 'null') {
-   return res.status(401).json({ message: "Auth Error" })
+   return res.status(401).json({ message: "" })
   }
   else {
    const data = jwt.verify(token, config.get("secretWord"))
@@ -24,7 +24,13 @@ export const authMiddleware = async(req, res, next) => {
   next()
  }
  catch (e) {
-  console.log(e, "error")
-  //return res.json({ message: e.res.data.message })
+  const error = { ...e }
+  switch (error.name) {
+   case "TokenExpiredError":
+    return res.status(401).json({ message: "Session expired" })
+   default:
+    return res.status(401).json({ message: "Server Error" })
+  }
+  
  }
 }

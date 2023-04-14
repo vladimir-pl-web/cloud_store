@@ -4,14 +4,13 @@ import config from 'config'
 import authRouter from './routes/User.js'
 import fileRouter from './routes/File.js'
 import cors from 'cors'
-import { corsMiddleware } from './middlwares/middlwares.js'
 const PORT = config.get("server")
 const URL = config.get("dbURL")
 const app = express()
 
 app.use(express.json())
 app.use('/api/auth', authRouter)
-app.use('/api/file', fileRouter)
+app.use('/api/files', fileRouter)
 app.use(cors())
 
 const start = async () => {

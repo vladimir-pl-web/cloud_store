@@ -40,7 +40,6 @@ export const fetchAuth = (data: IAuthData, type: string) => async (dispatch: Dis
    localStorage.setItem('token', data.token)
    dispatch(setAuth(true))
    dispatch(setData(data.user_data))
-   console.log(res, "rrrrrrrr")
   }
  }
  catch (e) {
@@ -61,7 +60,6 @@ export const fetchInitAuth = () => async (dispatch: Dispatch)=> {
    const{data}=res
    dispatch(setAuth(true))
    dispatch(setData(data.user_data))
-   console.log(res, "rrrrrrrr")
   }
  }
  catch (e) {

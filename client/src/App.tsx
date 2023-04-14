@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import classes from './app.module.scss';
 import Auth from './components/auth/auth/auth';
@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { displayErrorNotification } from './utils/utils';
 import { useAppDispatch, useAppSelector } from './hooks/hooks';
 import { fetchInitAuth, setUserError } from './store/redux/users/actionUsers';
+import Disk from './components/disk/disk';
 
 const App: FC = () => {
   const loading = useAppSelector(state => state.users.isLoading)
@@ -34,19 +35,24 @@ const App: FC = () => {
     <BrowserRouter>
       <div className={classes.app}>
         <Navbar loading={loading} />
-        { !isAuth && 
+        { !isAuth ? 
           <>
             {
               !loading ? (
                 <Routes>
-                  <Route path="/registration" element={<Auth title={"New User"} btnName={"Register"} />} />
-                  <Route path="/login" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
+                <Route path="/" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
+                <Route path="/login" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
+                <Route path="/registration" element={<Auth title={"New User"} btnName={"Register"} />} />
                 </Routes>
               ) : (
                 <Loader />
               )
             }
-          </>} 
+          </> :
+          <Routes>
+              <Route path="/disk" element={<Disk />} />
+              <Route path="*" element={<Disk/>} />
+          </Routes>} 
         <ToastContainer
           position="top-right"
           autoClose={2500}

@@ -1,0 +1,13 @@
+.disk{
+ display: flex;
+ justify-content: center;
+ align-items: flex-start;
+ flex-direction: column;
+ .btns{
+  display: flex;
+  margin-top: 20px;
+  .create{
+   margin-left: 10px;
+  }
+ }
+}
