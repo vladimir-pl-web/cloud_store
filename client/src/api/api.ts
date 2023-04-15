@@ -20,7 +20,7 @@ export const authInitial = async () => {
 }
 
 export const getFiles = async (dirId: string | null) => {
- const res = await instance.get(`files${dirId ? 'parent=' + dirId : ""}`, creds)
+ const res = await instance.get(`files${dirId ? '?parent=' + dirId : ""}`, creds)
  return res
 }
 

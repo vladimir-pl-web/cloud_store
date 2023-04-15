@@ -1,6 +1,4 @@
-import { json } from 'express'
 import File from '../models/File.js'
-import User from '../models/User.js'
 import fileService from '../services/fileService.js'
 
 class FileController {

@@ -9,8 +9,8 @@ import Popup from './popup/popup';
 
 const Disk = () => {
  const navigate = useNavigate()
- const{fetchAllFolders,setPopupDisplay,}=useActions()
- const dir = useAppSelector(state => state.files.currentDir)
+ const{fetchAllFolders,setPopupDisplay, pushAllDirs,setDir}=useActions()
+ const {currentDir,dirStack } = useAppSelector(state => state.files)
  const isLoading = useAppSelector(state => state.users.isLoading)
 
 
@@ -20,18 +20,26 @@ const Disk = () => {
  }, [])
 
  useEffect(() => {
-  fetchAllFolders(dir)
- }, [dir])
+  fetchAllFolders(currentDir)
+ }, [currentDir])
 
  const onCreate = () => {
   setPopupDisplay(true)
  }
+
+ const onBackHandler = () => {
+  let copyDirs = [...dirStack]
+  const lastDir = copyDirs.pop()
+  lastDir && setDir(lastDir)
+  pushAllDirs(copyDirs)
+  if (!dirStack.length || !lastDir)  setDir(null)
+ }
  return (
   <div className={classes.disk}>
-   <div className={classes.btns}>
-    <button disabled = {isLoading} className={classes.back}>Back</button>
-    <button disabled={isLoading} onClick={ onCreate} className={classes.create}>Create</button>
-   </div>
+   { !isLoading && <div className={classes.btns}>
+    {dirStack.length ? <button className={classes.back} onClick={() => onBackHandler()}>Back</button> : ""} 
+    <button  onClick={onCreate} className={classes.create}>Create</button>
+   </div>}
    {isLoading ? <Loader /> : <FolderList />}
    <Popup />
   </div>

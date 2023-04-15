@@ -1,6 +1,5 @@
-import { ChangeEvent, useState } from "react";
-import { useActions, useAppDispatch, useAppSelector } from "../../../hooks/hooks";
-import { fetchCreateFolder, setPopupDisplay } from "../../../store/redux/files/actionsFile";
+import { ChangeEvent, useState, KeyboardEvent } from "react";
+import { useActions, useAppSelector } from "../../../hooks/hooks";
 import Input from "../../auth/input/input";
 import classes from './popup.module.scss'
 
@@ -16,20 +15,34 @@ const Popup = () => {
  if (popupDisplay) {
   cls.push(classes.none)
  }
- function setName(e: ChangeEvent<HTMLInputElement>) {
+ const setName = (e: ChangeEvent<HTMLInputElement>)=> {
   setDirName(e.currentTarget.value)
  }
 
- function createHandler() {
+ const createHandler = ()=> {
   if (!dirName) return
   fetchCreateFolder(currentDir, dirName.trim())
   setPopupDisplay(false)
   setDirName("")
  }
 
+ const onKeyHandler = (e: KeyboardEvent<HTMLDivElement>) => {
+  switch (e.key) {
+   case "Enter":
+    return createHandler()
+   case "Escape":
+    return setDirName("")
+   default: return ""
+  }
+ }
+
  return (
   <div className={cls.join(" ")} onClick={() => setPopupDisplay(false)}>
-   <div className={classes.content} onClick={(e => e.stopPropagation())}>
+   <div
+    className={classes.content}
+    onClick={(e => e.stopPropagation())}
+   onKeyDown={(e)=>onKeyHandler(e)}
+   >
     <div className={classes.header}>
      <div className={classes.title}>Create New Folder</div>
      <button className={classes.close} onClick={() => setPopupDisplay(false)}>X</button>

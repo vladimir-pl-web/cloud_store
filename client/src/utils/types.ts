@@ -1,5 +1,5 @@
 
-import { createDir, setDir, setFiles, setPopupDisplay } from "../store/redux/files/actionsFile";
+
 import { defaultFilesState } from "../store/redux/files/fileReducer";
 
 ////users - auth
@@ -9,8 +9,8 @@ export const SET_ERROR = "SET_ERROR"
 export const SET_LOGOUT = "SET_LOGOUT"
 export const SET_DATA = "SET_DATA"
 export interface IAuthData {
-email: string
-password: string
+ email: string
+ password: string
 }
 
 export interface IUser {
@@ -19,20 +19,20 @@ export interface IUser {
  diskSpace: number
  usedSpace: number
  files: Array<string>
- }
+}
 
-export interface setLoadingType{
+export interface setLoadingType {
  type: typeof SET_LOADING
  payload: boolean
 }
-export interface setAuthType{
+export interface setAuthType {
  type: typeof SET_AUTH
  payload: boolean
 }
-export interface setLogoutType{
+export interface setLogoutType {
  type: typeof SET_LOGOUT
 }
-export interface setDataType{
+export interface setDataType {
  type: typeof SET_DATA
  payload: IUser
 }
@@ -47,28 +47,41 @@ export const SET_FILES = "SET_FILES"
 export const SET_DIR = "SET_DIR"
 export const CREATE_FOLDER = "CREATE_FOLDER"
 export const SET_POPUP_DISPLAY = "SET_POPUP_DISPLAY"
+export const PUSH_TO_STACK = "PUSH_TO_STACK"
+export const PUSH_ALL_DIRS = "PUSH_ALL_DIRS"
+export const POP_FROM_STACK = "POP_FROM_STACK"
 
 export type IFiles = typeof defaultFilesState
 
-export interface setFilesType{
+export interface setFilesType {
  type: typeof SET_FILES
  payload: Array<IFolder>
 }
-export interface setDirType{
- type: typeof SET_DIR
- payload: string
+export interface setPushAllDirs {
+ type: typeof PUSH_ALL_DIRS
+ payload: Array<string | null>
 }
-export interface setPopupDisplayType{
+export interface setDirType {
+ type: typeof SET_DIR
+ payload: string | null
+}
+export interface setPopupDisplayType {
  type: typeof SET_POPUP_DISPLAY
  payload: boolean
 }
 
-export interface setCreateFolderType{
+export interface setCreateFolderType {
  type: typeof CREATE_FOLDER,
  payload: IFolder
 }
-export type filesActionsType = setFilesType | setDirType | setLoadingType | setCreateFolderType | setPopupDisplayType
-export interface IFolder{
+
+export interface setPushToStack {
+ type: typeof PUSH_TO_STACK
+ payload: string | null
+}
+
+export type filesActionsType = setFilesType | setDirType | setPushToStack | setLoadingType | setCreateFolderType | setPopupDisplayType | setPushAllDirs
+export interface IFolder {
  name: string
  type: string
  size: number
