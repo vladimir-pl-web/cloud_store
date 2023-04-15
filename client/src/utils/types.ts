@@ -1,6 +1,6 @@
+
 import { createDir, setDir, setFiles, setPopupDisplay } from "../store/redux/files/actionsFile";
 import { defaultFilesState } from "../store/redux/files/fileReducer";
-import { setAuth, setData, setLoading, setLogout, setUserError } from "../store/redux/users/actionUsers";
 
 ////users - auth
 export const SET_LOADING = "SET_LOADING";
@@ -21,11 +21,25 @@ export interface IUser {
  files: Array<string>
  }
 
-export type setLoadingType = ReturnType<typeof setLoading>
-export type setAuthType = ReturnType<typeof setAuth>
-export type setLogoutType = ReturnType<typeof setLogout>
-export type setDataType = ReturnType<typeof setData>
-export type setErrorType = ReturnType<typeof setUserError>
+export interface setLoadingType{
+ type: typeof SET_LOADING
+ payload: boolean
+}
+export interface setAuthType{
+ type: typeof SET_AUTH
+ payload: boolean
+}
+export interface setLogoutType{
+ type: typeof SET_LOGOUT
+}
+export interface setDataType{
+ type: typeof SET_DATA
+ payload: IUser
+}
+export interface setErrorType {
+ type: typeof SET_ERROR
+ payload: string
+}
 export type userActionsAuthType = setLoadingType | setAuthType | setErrorType | setLogoutType | setDataType
 
 ////files
@@ -36,10 +50,23 @@ export const SET_POPUP_DISPLAY = "SET_POPUP_DISPLAY"
 
 export type IFiles = typeof defaultFilesState
 
-export type setFilesType = ReturnType<typeof setFiles>
-export type setDirType = ReturnType<typeof setDir>
-export type setPopupDisplayType = ReturnType<typeof setPopupDisplay>
-export type setCreateFolderType = ReturnType<typeof createDir>
+export interface setFilesType{
+ type: typeof SET_FILES
+ payload: Array<IFolder>
+}
+export interface setDirType{
+ type: typeof SET_DIR
+ payload: string
+}
+export interface setPopupDisplayType{
+ type: typeof SET_POPUP_DISPLAY
+ payload: boolean
+}
+
+export interface setCreateFolderType{
+ type: typeof CREATE_FOLDER,
+ payload: IFolder
+}
 export type filesActionsType = setFilesType | setDirType | setLoadingType | setCreateFolderType | setPopupDisplayType
 export interface IFolder{
  name: string

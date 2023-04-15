@@ -1,34 +1,31 @@
 import { FC, useEffect } from 'react';
-import { Route, Routes, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import classes from './app.module.scss';
 import Auth from './components/auth/auth/auth';
 import Navbar from './components/navbar/navbar';
-import { useSelector } from "react-redux";
-import { RootStateType } from './store/store';
 import Loader from './components/loader/loader';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { displayErrorNotification } from './utils/utils';
-import { useAppDispatch, useAppSelector } from './hooks/hooks';
-import { fetchInitAuth, setUserError } from './store/redux/users/actionUsers';
+import { useActions, useAppSelector } from './hooks/hooks';
 import Disk from './components/disk/disk';
 
 const App: FC = () => {
   const loading = useAppSelector(state => state.users.isLoading)
   const userError = useAppSelector(state => state.users.errorMessage) 
   const isAuth = useAppSelector(state => state.users.isAuth)
-  const dispatch = useAppDispatch()
+  const{setUserError,fetchInitAuth}=useActions()
 
   useEffect(() => {
     if (userError) {
       displayErrorNotification(userError)
-      dispatch(setUserError(""))
+      setUserError("")
     }
   }, [userError])
   
   useEffect(() => {
-   dispatch(fetchInitAuth()) 
+   fetchInitAuth() 
   }, [])
   
   return (

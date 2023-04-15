@@ -11,7 +11,7 @@ export const defaultUserState = {
 export const userReducer = (state = defaultUserState, action: userActionsAuthType): IUsers => {
   switch (action.type) {
     case SET_LOADING:
-      return { ...state, isLoading: action.loading }
+      return { ...state, isLoading: action.payload }
     case SET_AUTH:
       return { ...state, isAuth: action.payload }
     case SET_ERROR:

@@ -1,36 +1,35 @@
-import { IUser, SET_DATA } from './../../../utils/types';
-import { AnyAction, Dispatch } from "redux";
-import { IAuthData, SET_AUTH, SET_ERROR, SET_LOADING, SET_LOGOUT, userActionsAuthType } from "../../../utils/types";
-import { defaultUserState } from "./userReducer";
-import { authInitial, sendAuthData } from '../../../api/api'
-import { AppDispatch, AppThunk } from "../../store";
 import axios from "axios";
+import { Dispatch } from "redux";
+import { authInitial, sendAuthData } from '../../../api/api';
+import { IAuthData, SET_AUTH, SET_ERROR, SET_LOADING, SET_LOGOUT } from "../../../utils/types";
+import { IUser, setAuthType, setDataType, setErrorType, setLoadingType, setLogoutType, SET_DATA } from './../../../utils/types';
+import { defaultUserState } from "./userReducer";
 
 
 
 export type IUsers = typeof defaultUserState
 
-export const setLoading = (loading: boolean) => {
- return { type: SET_LOADING, loading } as const
+export const setLoading= (loading: boolean):setLoadingType  => {
+ return { type: SET_LOADING, payload:loading }
 }
 
-export const setAuth = (payload: boolean) => {
- return { type: SET_AUTH, payload } as const
+export const setAuth = (payload: boolean):setAuthType => {
+ return { type: SET_AUTH, payload }
 }
 
-export const setData = (payload: IUser) => {
- return { type: SET_DATA, payload } as const
+export const setData = (payload: IUser):setDataType => {
+ return { type: SET_DATA, payload }
 }
 
-export const setUserError = (payload: string) => {
- return { type: SET_ERROR, payload } as const
+export const setUserError = (payload: string):setErrorType => {
+ return { type: SET_ERROR, payload } 
 }
 
-export const setLogout = () => {
- return { type: SET_LOGOUT } as const
+export const setLogout = ():setLogoutType => {
+ return { type: SET_LOGOUT } 
 }
 
-export const fetchAuth = (data: IAuthData, type: string) => async (dispatch: Dispatch)=> {
+export const fetchAuth = (data: IAuthData, type: string) => async (dispatch:Dispatch)=> {
 
  dispatch(setLoading(true))
  try {
@@ -51,7 +50,7 @@ export const fetchAuth = (data: IAuthData, type: string) => async (dispatch: Dis
  dispatch(setLoading(false))
 }
 
-export const fetchInitAuth = () => async (dispatch: Dispatch)=> {
+export const fetchInitAuth = () => async (dispatch:Dispatch)=> {
 
  dispatch(setLoading(true))
  try {
