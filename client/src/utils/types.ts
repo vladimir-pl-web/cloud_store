@@ -1,6 +1,7 @@
 
 
 import { defaultFilesState } from "../store/redux/files/fileReducer";
+import { defaultUploaderState } from "../store/redux/upload/uploadReducer";
 
 ////users - auth
 export const SET_LOADING = "SET_LOADING";
@@ -45,7 +46,7 @@ export type userActionsAuthType = setLoadingType | setAuthType | setErrorType | 
 ////files
 export const SET_FILES = "SET_FILES"
 export const SET_DIR = "SET_DIR"
-export const CREATE_FOLDER = "CREATE_FOLDER"
+export const ADD_FILE = "ADD_FILE"
 export const SET_POPUP_DISPLAY = "SET_POPUP_DISPLAY"
 export const PUSH_TO_STACK = "PUSH_TO_STACK"
 export const PUSH_ALL_DIRS = "PUSH_ALL_DIRS"
@@ -71,7 +72,7 @@ export interface setPopupDisplayType {
 }
 
 export interface setCreateFolderType {
- type: typeof CREATE_FOLDER,
+ type: typeof ADD_FILE,
  payload: IFolder
 }
 
@@ -91,3 +92,39 @@ export interface IFolder {
  childs: Array<string>
  _id: string
 }
+
+////uploader
+
+export type IUploader = typeof defaultUploaderState
+
+export const SET_UPLOADER = "SET_UPLOADER"
+export const ADD_UPLOAD_FILE = "ADD_UPLOAD_FILE"
+export const REMOVE_UPLOAD_FILE = "REMOVE_UPLOAD_FILE"
+export const CHANGE_UPLOAD_FILE = "CHANGE_UPLOAD_FILE"
+
+export interface IUploadedFile{
+ id: string
+ name: string
+ progress: number
+}
+
+export interface setUploaderType {
+ type: typeof SET_UPLOADER
+ payload:boolean
+}
+
+export interface setAddFileType {
+ type: typeof ADD_UPLOAD_FILE
+ payload: IUploadedFile
+}
+export interface setRemoveFileType {
+ type: typeof REMOVE_UPLOAD_FILE
+ payload: string
+}
+export interface setChangeFileType {
+ type: typeof CHANGE_UPLOAD_FILE
+ payload: {id: string, progress: number}
+}
+export type uploaderActionsType = setUploaderType | setAddFileType | setRemoveFileType |setChangeFileType
+
+

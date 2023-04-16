@@ -1,0 +1,39 @@
+@import "../../../../utils/colors.scss";
+
+.uploadFile {
+ background-color: $background;
+ border-radius: 8px;
+ margin: 5px 0;
+ padding: 5px 10px;
+
+ .header {
+  display: flex;
+  justify-content: space-between;
+ }
+
+ .progressBar {
+  height: 1rem;
+  border-radius: 8px;
+  background-color: $font-color;
+  display: flex;
+  margin: 3px 0;
+  position: relative;
+
+  .uploadBar {
+   height: 1rem;
+   border-radius: 8px;
+   background-color: green;
+   display: flex;
+  }
+  .uploadPercent {
+   z-index: 1000;
+   color: black;
+   font-weight: 800;
+   font-size: 12px;
+   left: 50%;
+   bottom: 0;
+   transform: translate(-50%);
+   position: absolute;
+  }
+ }
+}

@@ -7,4 +7,5 @@ import fileController from '../controllers/fileController.js'
 
 router.post("", authMiddleware, fileController.createDir)
 router.get("", authMiddleware, fileController.getFiles)
+router.post("/upload", authMiddleware, fileController.uploadFiles)
 export default router

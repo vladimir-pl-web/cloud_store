@@ -4,10 +4,13 @@ import { bindActionCreators } from 'redux'
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { RootStateType } from "../store/store";
 import * as fileActions from '../store/redux/files/actionsFile'
+import * as uploadActions from '../store/redux/upload/uploaderActions'
 import * as userActions from '../store/redux/users/actionUsers'
+
 const actions = {
  ...fileActions,
- ...userActions
+ ...userActions,
+ ...uploadActions
 }
 export const useAppDispatch = () => useDispatch<AppThunk>()
 

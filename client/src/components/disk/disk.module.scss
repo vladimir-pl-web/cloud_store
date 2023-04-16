@@ -1,13 +1,36 @@
 .disk{
  display: flex;
- justify-content: center;
+ justify-content: flex-start;
  align-items: flex-start;
  flex-direction: column;
+ width: 90%;
+ height: calc(100vh - 100px);
  .btns{
   display: flex;
   margin-top: 20px;
   .create{
    margin-left: 10px;
   }
+  .upload{
+   .label{
+    border: 2px dashed #566885;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+   }
+   input{
+    display: none;
+   }
+  }
  }
+}
+.drag{
+ width: 90%;
+ height: calc(100vh - 100px - 50px);
+ margin: 50px;
+ border: dashed #566885 3px;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ font-size: 40px;
 }

@@ -1,5 +1,5 @@
 
-import { CREATE_FOLDER, filesActionsType, IFiles, IFolder, SET_DIR, PUSH_TO_STACK, SET_FILES, SET_POPUP_DISPLAY, PUSH_ALL_DIRS } from "../../../utils/types"
+import { ADD_FILE, filesActionsType, IFiles, IFolder, SET_DIR, PUSH_TO_STACK, SET_FILES, SET_POPUP_DISPLAY, PUSH_ALL_DIRS } from "../../../utils/types"
 
 export const defaultFilesState = {
   isLoading: false,
@@ -15,7 +15,7 @@ export const fileReducer = (state = defaultFilesState, action: filesActionsType)
       return { ...state, files: action.payload }
     case SET_DIR:
       return { ...state, currentDir: action.payload }
-    case CREATE_FOLDER:
+    case ADD_FILE:
       return { ...state, files: [...state.files, action.payload] }
     case SET_POPUP_DISPLAY:
       return { ...state, popupDisplay: action.payload }
