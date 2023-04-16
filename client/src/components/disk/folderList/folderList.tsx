@@ -1,12 +1,13 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useAppSelector } from '../../../hooks/hooks'
 import {IFolder } from '../../../utils/types'
 import FileDir from './file/file'
 import classes from './fileList.module.scss'
+import Files from './files/files'
 
 
 const FileList = () => {
-
+const[isElements,setIsElements] = useState<boolean>(true)
  const headers = [
   { id: 1, value: "Name" },
   { id: 2, value: "Created" },
@@ -36,12 +37,12 @@ const fls = useAppSelector(state => state.files.files)
   
  return (
   <div className={classes.fileList}>
-   <ul className={classes.header}>
-     {hdrs}
-     </ul>
-     <ul>
+     {isElements && <ul className={classes.header}>
+       {hdrs}
+     </ul>} 
+     <Files isElements={isElements} setIsElements={setIsElements}>
        {files}
-     </ul>
+     </Files>
   </div>
  )
 }

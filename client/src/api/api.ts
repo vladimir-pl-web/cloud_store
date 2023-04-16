@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { createFalse } from 'typescript';
 import { token } from '../utils/constants'
 import { IAuthData } from '../utils/types';
 export const creds = { headers: { Authorization: `Bearer ${token}` } }
@@ -32,14 +33,18 @@ export const createFolder = async (dirId: string | null, name: string) => {
  return res
 }
 
-// export const uploadFile = async (form: Object, uploadedFile:IUploadedFile, dispatch:Dispatch) => {
-//  const res = await instance.post(`files/upload`, form, {
-//   headers: { ...creds.headers },
-//   onUploadProgress: progressEvent => {
-//    const percentCompleted = progressEvent.total ? (progressEvent.loaded / progressEvent.total) * 100 : 0
-//    dispatch(changeUploadedFile({id: uploadedFile.id, progress: +percentCompleted.toFixed()}))
-//   }
-//  })
-//  return res
-// }
+export const downloadFile = async (id: string) => {
+ const res = await instance.get(`files/download?id=${id}`, {
+  headers: { ...creds.headers },
+  responseType: 'blob'
+ })
+ console.log(res, "res")
+ return res
+}
+
+export const deleteFile = async (id: string) => {
+ const res = await instance.delete(`files/delete?id=${id}`, creds)
+ return res
+}
+
 

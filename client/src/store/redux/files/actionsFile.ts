@@ -1,17 +1,25 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Dispatch } from "redux";
-import { createFolder, creds, getFiles, instance,} from "../../../api/api";
-import { ADD_FILE, IFolder, setPushToStack, PUSH_TO_STACK, setCreateFolderType, setDirType, setFilesType, setPopupDisplayType, SET_DIR, SET_FILES, SET_POPUP_DISPLAY, PUSH_ALL_DIRS, setPushAllDirs } from "../../../utils/types";
+import { createFolder, creds, getFiles, instance,downloadFile, deleteFile} from "../../../api/api";
+import { ADD_FILE, IFolder, setPushToStack, PUSH_TO_STACK, setCreateFolderType, setDirType, setFilesType, setPopupDisplayType, SET_DIR, SET_FILES, SET_POPUP_DISPLAY, PUSH_ALL_DIRS, setPushAllDirs, IMessage, setHandleMessage, HANDLE_MESSAGE, DELETE_FILE, setDeleteFileType } from "../../../utils/types";
 import { setUploader,addUploadedFile, changeUploadedFile } from "../upload/uploaderActions";
 import { setLoading } from "../users/actionUsers";
+import { Messages } from '../../../utils/enums';
 
 export const setFiles = (payload: Array<IFolder>):setFilesType => {
  return { type: SET_FILES, payload }
 }
 
+export const onDeleteFile = (payload: string):setDeleteFileType => {
+  return { type: DELETE_FILE, payload }
+ }
 export const setDir = (payload: string | null ):setDirType => {
  return { type: SET_DIR, payload }
 }
+
+export const setMessage = (payload:IMessage ):setHandleMessage => {
+  return { type: HANDLE_MESSAGE, payload }
+ }
 
 export const addFile = (payload: IFolder ):setCreateFolderType => {
   return { type: ADD_FILE, payload }
@@ -97,4 +105,58 @@ export const fetchUploadFle = (dirId: string | null, file: Blob, name:string) =>
  console.log(e, "errorFromFileReducer")
   }
   dispatch(setUploader(false))
- }
+}
+ 
+export const fetchDownloadFle = ( id:string, name:string) => async (dispatch: Dispatch) => {
+  try {
+    const res = await downloadFile(id)
+    const url = window.URL.createObjectURL(new Blob([res.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', name);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+  catch (e) {
+   // if (axios.isAxiosError(e) && e.response) {
+   //  dispatch(setUserError(e.response.data.message))
+   //  localStorage.removeItem("token")
+   // }
+ console.log(e, "error From Download")
+  }
+}
+
+export const fetchDeleteFle = (file: IFolder) => async (dispatch: Dispatch) => {
+  const { _id, name, type } = file
+  const fileType = type === 'dir' ? "Folder" : "File"
+  dispatch(setLoading(true))
+  try {
+    const res = await deleteFile(_id)
+    if (res) {
+      dispatch(onDeleteFile(_id))
+      dispatch(setMessage({
+        status: Messages.A,
+        text:`${fileType} ${name} deleted.` 
+      }))
+    } else {
+      dispatch(setMessage({
+        status: Messages.B,
+        text:`Error` 
+      }))
+    }
+
+  }
+  catch (e) {
+   // if (axios.isAxiosError(e) && e.response) {
+   //  dispatch(setUserError(e.response.data.message))
+   //  localStorage.removeItem("token")
+   // }
+ console.log(e, "error From Delete")
+  }
+  dispatch(setLoading(false))
+  dispatch(setMessage({
+    status: Messages.C,
+    text:""
+  }))
+}

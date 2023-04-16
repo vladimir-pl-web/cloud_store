@@ -2,6 +2,7 @@
 
 import { defaultFilesState } from "../store/redux/files/fileReducer";
 import { defaultUploaderState } from "../store/redux/upload/uploadReducer";
+import { Messages } from "./enums";
 
 ////users - auth
 export const SET_LOADING = "SET_LOADING";
@@ -47,12 +48,16 @@ export type userActionsAuthType = setLoadingType | setAuthType | setErrorType | 
 export const SET_FILES = "SET_FILES"
 export const SET_DIR = "SET_DIR"
 export const ADD_FILE = "ADD_FILE"
+export const DELETE_FILE = "DELETE_FILE"
 export const SET_POPUP_DISPLAY = "SET_POPUP_DISPLAY"
 export const PUSH_TO_STACK = "PUSH_TO_STACK"
 export const PUSH_ALL_DIRS = "PUSH_ALL_DIRS"
 export const POP_FROM_STACK = "POP_FROM_STACK"
+export const HANDLE_MESSAGE = "HANDLE_MESSAGE"
+
 
 export type IFiles = typeof defaultFilesState
+export type IMessage = {status:string, text: string}
 
 export interface setFilesType {
  type: typeof SET_FILES
@@ -75,13 +80,20 @@ export interface setCreateFolderType {
  type: typeof ADD_FILE,
  payload: IFolder
 }
-
+export interface setHandleMessage {
+ type: typeof HANDLE_MESSAGE,
+ payload: IMessage
+}
+export interface setDeleteFileType {
+ type: typeof DELETE_FILE,
+ payload: string
+}
 export interface setPushToStack {
  type: typeof PUSH_TO_STACK
  payload: string | null
 }
 
-export type filesActionsType = setFilesType | setDirType | setPushToStack | setLoadingType | setCreateFolderType | setPopupDisplayType | setPushAllDirs
+export type filesActionsType = setFilesType | setDirType | setPushToStack | setLoadingType | setCreateFolderType | setPopupDisplayType | setPushAllDirs | setHandleMessage | setDeleteFileType
 export interface IFolder {
  name: string
  type: string

@@ -7,9 +7,10 @@ import Navbar from './components/navbar/navbar';
 import Loader from './components/loader/loader';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { displayErrorNotification } from './utils/utils';
+import { displayNotification } from './utils/utils';
 import { useActions, useAppSelector } from './hooks/hooks';
 import Disk from './components/disk/disk';
+import { Messages } from './utils/enums';
 
 const App: FC = () => {
   const loading = useAppSelector(state => state.users.isLoading)
@@ -17,9 +18,9 @@ const App: FC = () => {
   const isAuth = useAppSelector(state => state.users.isAuth)
   const{setUserError,fetchInitAuth}=useActions()
 
-  useEffect(() => {
+  useEffect(() => { 
     if (userError) {
-      displayErrorNotification(userError)
+      displayNotification(userError, Messages.A)
       setUserError("")
     }
   }, [userError])

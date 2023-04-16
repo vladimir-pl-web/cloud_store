@@ -1,25 +1,61 @@
 .file {
- margin: 10px 0;
- border-bottom: solid 2px #566885;
- display: grid;
- grid-template-columns: 1fr 4fr repeat(4, 1fr);
- align-items: center;
- .img {
-  justify-self: center;
-  cursor: pointer
-}
-.created{
- grid-column-start: 5;
- justify-self: center;
-}
-.size {
- grid-column-start: 6;
- justify-self: center;
-}
-&:hover {
- transform: scale(1.02);
-}
-}
+  margin: 10px 0;
+  border-bottom: solid 2px #566885;
+  display: grid;
+  grid-template-columns: 1fr 4fr repeat(4, 1fr);
+  align-items: center;
+  justify-content: space-between;
+  .name{
 
+  }
+  .img {
+    justify-self: center;
+    cursor: pointer
+  }
 
+  .created {
+    grid-column-start: 5;
+    justify-self: center;
+  }
 
+  .size {
+    grid-column-start: 6;
+    justify-self: center;
+  }
+
+  .btnDownload, .btnDelete {
+    display: none;
+    height: 25px;
+    width: 40px;
+    border-radius: 25px;
+    cursor: pointer;
+    img{
+      height: 12px;
+      width: 12px;
+    }
+  }
+
+.btnDownload{
+  grid-column-start: 3;
+}
+.btnDelete{
+  grid-column-start: 4;
+}
+  &:hover {
+    transform: scale(1.02);
+    .btnDownload {
+      display: block;
+      grid-column-start: 3;
+      justify-self: end;
+      margin-right: 5px;
+    }
+
+    .btnDelete {
+      display: block;
+      grid-column-start: 4;
+      justify-self:start;
+      margin-left: 5px;
+    }
+  }
+
+}
