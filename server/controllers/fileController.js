@@ -30,11 +30,14 @@ class FileController {
     }
 
     async getFiles(req, res) {
-
+        const { sort, dir, search} = req.query
         try {
-            const { sort, dir } = req.query
-            console.log(sort, dir, "request");
             let files
+            if (search) {
+                const fls = await File.find({ user: req.user.id })
+                const result = fls.filter((el) => el.name.includes(search))
+                return res.json({ files:result })
+            }
             switch (sort) {
                 case "name":
                      files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ name: dir })
@@ -61,6 +64,7 @@ class FileController {
             }
             return res.json({ files })
         } catch (e) {
+            console.log(e)
             return res.status(500).json({ message: "Can not get files" })
         }
     }

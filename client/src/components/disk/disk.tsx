@@ -6,6 +6,7 @@ import Loader from '../loader/loader';
 import classes from './disk.module.scss'
 import FolderList from './folderList/folderList';
 import Popup from './popup/popup';
+import SearchFile from './search/search';
 import Uploader from './uploader/uploader';
 
 const Disk = () => {
@@ -84,6 +85,7 @@ const Disk = () => {
                   <label htmlFor="upload_input" className={classes.label}>Upload File</label>
                   <input multiple={true} onChange={(e) => onFileUpload(e)} type="file" id="upload_input" />
                </div>
+               <SearchFile />
             </div>}
          {isLoading ? <Loader /> : <FolderList />}
          <Popup />

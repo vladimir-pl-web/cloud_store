@@ -17,9 +17,10 @@ export const authInitial = async () => {const res = await instance.get(`auth/aut
  return res
 }
 
-export const getFiles = async (dirId: string | null, sorts: ISort) => {
- const{sort, dir} = sorts
- const res = await instance.get(`files?sort=${sort}&dir=${dir}${dirId ? '&parent=' + dirId : ""}`, creds)
+export const getFiles = async (dirId: string | null, sorts: ISort, search?: string) => {
+ const { sort, dir } = sorts
+
+ const res = await instance.get(`files?sort=${sort}&dir=${dir}${dirId ? '&parent=' + dirId : ""}${search ? '&search=' + search : ""}`, creds)
  return res
 }
 

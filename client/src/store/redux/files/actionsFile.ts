@@ -42,10 +42,10 @@ export const setSort = (payload: ISort): setSortType => {
   return { type: SET_SORT, payload }
  }
 
-export const fetchAllFolders = (dirId: string | null, sorts: ISort)=>  async(dispatch:Dispatch)=> {
+export const fetchAllFolders = (dirId: string | null, sorts: ISort, search?:string)=>  async(dispatch:Dispatch)=> {
  dispatch(setLoading(true))
  try {
-  const res = await getFiles(dirId, sorts)
+  const res = await getFiles(dirId, sorts, search)
   dispatch(setFiles((res.data.files)))
  }
  catch (e) {
