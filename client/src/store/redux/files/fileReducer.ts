@@ -1,5 +1,6 @@
+import { ISort } from './../../../utils/types';
 
-import { ADD_FILE, filesActionsType, IFiles, IFolder, SET_DIR, PUSH_TO_STACK, SET_FILES, SET_POPUP_DISPLAY, PUSH_ALL_DIRS, DELETE_FILE, HANDLE_MESSAGE } from "../../../utils/types"
+import { ADD_FILE, filesActionsType, IFiles, IFolder, SET_DIR, PUSH_TO_STACK, SET_FILES, SET_POPUP_DISPLAY, PUSH_ALL_DIRS, DELETE_FILE, HANDLE_MESSAGE, SET_SORT } from "../../../utils/types"
 
 export const defaultFilesState = {
   isLoading: false,
@@ -10,7 +11,11 @@ export const defaultFilesState = {
   message: {
     status: "default",
     text: ""
-  }
+  },
+  sorts: {
+    sort: "date",
+    dir: 1
+  } as ISort
 }
 
 export const fileReducer = (state = defaultFilesState, action: filesActionsType): IFiles => {
@@ -31,6 +36,9 @@ export const fileReducer = (state = defaultFilesState, action: filesActionsType)
       return { ...state, dirStack: action.payload }
     case HANDLE_MESSAGE:
       return { ...state, message: { ...action.payload } }
+    case SET_SORT:
+      console.log(action.payload, action.type)
+      return { ...state, sorts: { ...action.payload }  }
     default:
       return state
   }

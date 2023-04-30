@@ -4,10 +4,8 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { emailValidation } from '../../../utils/constants'
 import Field from "../input/input";
 import { useLocation } from 'react-router-dom';
-import { IAuthData, userActionsAuthType } from "../../../utils/types";
-import { fetchAuth, setUserError } from "../../../store/redux/users/actionUsers";
-import { useDispatch } from "react-redux";
-import { AnyAction, Dispatch } from "redux";
+import { IAuthData } from "../../../utils/types";
+import { fetchAuth } from "../../../store/redux/users/actionUsers";
 import { useAppDispatch } from "../../../hooks/hooks";
 
 

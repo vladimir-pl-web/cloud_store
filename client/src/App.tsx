@@ -14,33 +14,33 @@ import { Messages } from './utils/enums';
 
 const App: FC = () => {
   const loading = useAppSelector(state => state.users.isLoading)
-  const userError = useAppSelector(state => state.users.errorMessage) 
+  const userError = useAppSelector(state => state.users.errorMessage)
   const isAuth = useAppSelector(state => state.users.isAuth)
-  const{setUserError,fetchInitAuth}=useActions()
+  const { setUserError, fetchInitAuth } = useActions()
 
-  useEffect(() => { 
+  useEffect(() => {
     if (userError) {
       displayNotification(userError, Messages.A)
       setUserError("")
     }
   }, [userError])
-  
+
   useEffect(() => {
-   fetchInitAuth() 
+    fetchInitAuth()
   }, [])
-  
+
   return (
     <BrowserRouter>
       <div className={classes.app}>
         <Navbar loading={loading} />
-        { !isAuth ? 
+        {!isAuth ?
           <>
             {
               !loading ? (
                 <Routes>
-                <Route path="/" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
-                <Route path="/login" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
-                <Route path="/registration" element={<Auth title={"New User"} btnName={"Register"} />} />
+                  <Route path="/" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
+                  <Route path="/login" element={<Auth title={"Enter Into Storage"} btnName={"Login"} />} />
+                  <Route path="/registration" element={<Auth title={"New User"} btnName={"Register"} />} />
                 </Routes>
               ) : (
                 <Loader />
@@ -48,9 +48,11 @@ const App: FC = () => {
             }
           </> :
           <Routes>
-              <Route path="/disk" element={<Disk />} />
-              <Route path="*" element={<Disk/>} />
-          </Routes>} 
+            <Route path="/disk/:id/:id/:id" element={<Disk />} />
+              {/* <Route index element={<Disk />} />
+              <Route path="id/" element={<Disk />} /> */}
+            <Route path="*" element={<Disk />} />
+          </Routes>}
         <ToastContainer
           position="top-right"
           autoClose={2500}

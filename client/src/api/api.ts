@@ -1,7 +1,6 @@
 import axios from 'axios'
-import { createFalse } from 'typescript';
 import { token } from '../utils/constants'
-import { IAuthData } from '../utils/types';
+import { IAuthData, ISort } from '../utils/types';
 export const creds = { headers: { Authorization: `Bearer ${token}` } }
 
 export const instance = axios.create({
@@ -19,8 +18,9 @@ export const authInitial = async () => {
  return res
 }
 
-export const getFiles = async (dirId: string | null) => {
- const res = await instance.get(`files${dirId ? '?parent=' + dirId : ""}`, creds)
+export const getFiles = async (dirId: string | null, sorts: ISort) => {
+ const{sort, dir} = sorts
+ const res = await instance.get(`files${dirId ? '?parent=' + dirId : ""}&sort=${sort}&dir=${dir}`, creds)
  return res
 }
 

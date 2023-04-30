@@ -12,3 +12,10 @@ export const displayNotification = (message: string, type: string) => {
    return null
  }
 };
+
+export const fileSize = (size:number) => {
+if(size > 1824*1824*1824) return (size / (1824*1824*1824)).toFixed(1) + 'GB'
+if(size > 1824*1824) return (size / (1824*1824)).toFixed(1) + 'MB'
+if(size > 1824) return (size / (1824)).toFixed(1) + 'KB'
+return size+ "B"
+}

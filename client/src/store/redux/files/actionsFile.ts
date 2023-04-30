@@ -1,10 +1,12 @@
+import { ISort, setSortType, SET_SORT } from './../../../utils/types';
 import { v4 as uuidv4 } from 'uuid';
-import { Dispatch } from "redux";
+import { $CombinedState, Dispatch } from "redux";
 import { createFolder, creds, getFiles, instance,downloadFile, deleteFile} from "../../../api/api";
 import { ADD_FILE, IFolder, setPushToStack, PUSH_TO_STACK, setCreateFolderType, setDirType, setFilesType, setPopupDisplayType, SET_DIR, SET_FILES, SET_POPUP_DISPLAY, PUSH_ALL_DIRS, setPushAllDirs, IMessage, setHandleMessage, HANDLE_MESSAGE, DELETE_FILE, setDeleteFileType } from "../../../utils/types";
 import { setUploader,addUploadedFile, changeUploadedFile } from "../upload/uploaderActions";
 import { setLoading } from "../users/actionUsers";
 import { Messages } from '../../../utils/enums';
+import { store } from '../../store';
 
 export const setFiles = (payload: Array<IFolder>):setFilesType => {
  return { type: SET_FILES, payload }
@@ -34,13 +36,16 @@ export const pushToStack = (payload: string | null):setPushToStack => {
 
 export const pushAllDirs = (payload: Array<string | null>):setPushAllDirs => {
   return { type: PUSH_ALL_DIRS, payload }
+}
+ 
+export const setSort = (payload: ISort): setSortType => {
+  return { type: SET_SORT, payload }
  }
 
-export const fetchAllFolders = (dirId: string | null)=>  async(dispatch:Dispatch)=> {
-
+export const fetchAllFolders = (dirId: string | null, sorts: ISort)=>  async(dispatch:Dispatch)=> {
  dispatch(setLoading(true))
  try {
-  const res = await getFiles(dirId)
+  const res = await getFiles(dirId, sorts)
   dispatch(setFiles((res.data.files)))
  }
  catch (e) {

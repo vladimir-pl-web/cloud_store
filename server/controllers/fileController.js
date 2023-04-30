@@ -31,14 +31,27 @@ class FileController {
 
     async getFiles(req, res) {
         try {
+            // let files
+            // const { sort, dir } = req.query
+            // switch (sort) {
+            //     case "name":
+            //         return files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ name: dir })
+            //     case "type":
+            //         return files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ type: dir })
+            //     case "date":
+            //         return files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ created: dir })
+            //     case "size":
+            //         return files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ size: dir })
+            //     default:
+            //         return files = await File.find({ user: req.user.id, parent: req.query.parent })
+            // }
             const files = await File.find({ user: req.user.id, parent: req.query.parent })
             let file
             if (req.query.parent) {
-                file = await File.findOne({_id: req.query.parent, user: req.user.id,})
+                file = await File.findOne({ _id: req.query.parent, user: req.user.id, })
             } else {
-                file = await File.findOne({parent:null, user: req.user.id,})
+                file = await File.findOne({ parent: null, user: req.user.id, })
             }
-            console.log(file, "fifififif")
             return res.json({ files })
         } catch (e) {
             return res.status(500).json({ message: "Can not get files" })
@@ -57,7 +70,7 @@ class FileController {
             const onSpaceRemove = (str) => {
                 return fileService.removeSpaces(str)
             }
-                
+
             let path
             if (parent) {
                 path = `${config.get('filePath')}\\${user._id}\\${onSpaceRemove(parent.path)}\\${onSpaceRemove(file.name)}`
@@ -70,7 +83,7 @@ class FileController {
             }
 
             let filePath = file.name
-            if(parent) filePath = `${parent.path}\\${file.name}` 
+            if (parent) filePath = `${parent.path}\\${file.name}`
             file.mv(path)
             const type = file.name.split(".").pop()
             const dbFile = new File({
@@ -93,21 +106,18 @@ class FileController {
     }
 
     async downloadFile(req, res) {
-        
+
         try {
             const file = await File.findOne({ _id: req.query.id, user: req.user.id })
             const path = `${config.get('filePath')}\\${req.user.id}\\${file.path}`
 
-            console.log(fs.existsSync(path))
-        
+
             if (fs.existsSync(path)) {
-                console.log("success")
                 return res.download(path, file.name)
             } else {
-                console.log("error")
                 return res.status(400).json({ message: "Download error", d: "asdasdasd" })
             }
-                
+
         }
         catch (e) {
             console.log(e, "error")
@@ -122,11 +132,11 @@ class FileController {
         try {
             const file = await File.findOne({ _id: req.query.id, user: req.user.id })
             if (!file) {
-                return res.status(404).json({message: 'File not found'})
+                return res.status(404).json({ message: 'File not found' })
             }
             fileService.deleteFile(file)
             await file.deleteOne()
-            return res.status(200).json({message: "Deleted"})
+            return res.status(200).json({ message: "Deleted" })
         }
         catch (e) {
             console.log(e, "eeee")

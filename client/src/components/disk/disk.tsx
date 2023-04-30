@@ -11,7 +11,7 @@ import Uploader from './uploader/uploader';
 const Disk = () => {
    const navigate = useNavigate()
    const { fetchAllFolders, setPopupDisplay, pushAllDirs, setDir,fetchUploadFle } = useActions()
-   const { currentDir, dirStack } = useAppSelector(state => state.files)
+   const { currentDir, dirStack, sorts } = useAppSelector(state => state.files)
    const isLoading = useAppSelector(state => state.users.isLoading)
    const [dragEnter, setDragEnter] = useState<boolean>(false)
 
@@ -22,7 +22,7 @@ const Disk = () => {
    }, [])
 
    useEffect(() => {
-      fetchAllFolders(currentDir)
+      fetchAllFolders(currentDir, sorts)
    }, [currentDir])
 
    const onCreate = () => {
