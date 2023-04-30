@@ -13,14 +13,13 @@ export const sendAuthData = async (payload: IAuthData, type: string) => {
  return res
 }
 
-export const authInitial = async () => {
- const res = await instance.get(`auth/auth`, creds)
+export const authInitial = async () => {const res = await instance.get(`auth/auth`, creds)
  return res
 }
 
 export const getFiles = async (dirId: string | null, sorts: ISort) => {
  const{sort, dir} = sorts
- const res = await instance.get(`files${dirId ? '?parent=' + dirId : ""}&sort=${sort}&dir=${dir}`, creds)
+ const res = await instance.get(`files?sort=${sort}&dir=${dir}${dirId ? '&parent=' + dirId : ""}`, creds)
  return res
 }
 

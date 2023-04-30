@@ -30,22 +30,29 @@ class FileController {
     }
 
     async getFiles(req, res) {
+
         try {
-            // let files
-            // const { sort, dir } = req.query
-            // switch (sort) {
-            //     case "name":
-            //         return files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ name: dir })
-            //     case "type":
-            //         return files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ type: dir })
-            //     case "date":
-            //         return files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ created: dir })
-            //     case "size":
-            //         return files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ size: dir })
-            //     default:
-            //         return files = await File.find({ user: req.user.id, parent: req.query.parent })
-            // }
-            const files = await File.find({ user: req.user.id, parent: req.query.parent })
+            const { sort, dir } = req.query
+            console.log(sort, dir, "request");
+            let files
+            switch (sort) {
+                case "name":
+                     files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ name: dir })
+                     break
+                case "type":
+                     files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ type: dir })
+                     break
+                case "date":
+                     files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ created: dir })
+                     break
+                case "size":
+                     files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ size: dir })
+                     break
+                default:
+                     files = await File.find({ user: req.user.id, parent: req.query.parent })
+                     break
+            }
+            //const files = await File.find({ user: req.user.id, parent: req.query.parent })
             let file
             if (req.query.parent) {
                 file = await File.findOne({ _id: req.query.parent, user: req.user.id, })

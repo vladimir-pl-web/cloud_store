@@ -34,7 +34,10 @@ const ArrowBtns: React.FC<IArrow> = ({ column }) => {
     dir: dirNumber,
     sort: col 
    })
-   fetchAllFolders(currentDir,sorts)
+   fetchAllFolders(currentDir,{
+    dir: dirNumber,
+    sort: col 
+   })
   }
 }
 
