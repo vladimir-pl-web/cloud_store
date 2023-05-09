@@ -11,6 +11,7 @@ import { Messages } from '../../../../utils/enums'
 import { displayNotification, fileSize } from '../../../../utils/utils'
 import { Link, useParams } from 'react-router-dom'
 import { TransitionGroup } from 'react-transition-group'
+import { Button } from 'reactstrap';
 
 
 
@@ -100,26 +101,50 @@ const FileListItem: React.FC<IFiles> = ({ file, setAnim }) => {
     <li className={fileClasses} onClick={() => onOpenFolder()}>
       <Link to={`disk/:${name}/`} className={linkClasses} >
         <div className={classes.nameWrap}>
-        <img src={type === 'dir' ? folderLogo : fileLogo} alt="item" className={imgClasses} />
-        <div className={nameClasses}>{name}</div>
+          <img src={type === 'dir' ? folderLogo : fileLogo} alt="item" className={imgClasses} />
+          <div className={nameClasses}>{name}</div>
         </div>
-        <div className={wrapClasses}>
-        {file.type !== 'dir' &&
-          <button
-            className={btnDownloadClasses}
-            onClick={onFileDownload}
-          >
-            <img src={downloadLogo} alt="downloadLogo" />
-          </button>}
-        <button
-          onClick={(e) => onDeleteHandler(e)}
-          className={btnDeleteClasses}>
-          <img src={deleteLogo} alt="deleteLogo" />
-          </button>
-          </div>
         {view === "list" && <div className={classes.created}>{created.slice(0, 10)}</div>}
-        {view === "list" && <div className={classes.size}>{fileSize(size)}</div>}
-        {view === "list" && <div className={classes.size}>{type}</div>}
+        {view === "list" && <div className={classes.size}>
+          {fileSize(size)}
+          <div className={wrapClasses}>
+            {file.type !== 'dir' &&
+              <Button
+                color="info"
+                outline
+                className={btnDownloadClasses}
+                onClick={onFileDownload}
+              >
+                <img src={downloadLogo} alt="downloadLogo" />
+              </Button>}
+            <Button
+              color="danger"
+              outline
+              onClick={(e) => onDeleteHandler(e)}
+              className={btnDeleteClasses}>
+              <img src={deleteLogo} alt="deleteLogo" />
+            </Button>
+          </div>
+        </div>}
+        {view === "list" && <div className={classes.type}>{type}</div>}
+        {view === "plate" && <div className={wrapClasses}>
+          {file.type !== 'dir' &&
+            <Button
+              color="info"
+              outline
+              className={btnDownloadClasses}
+              onClick={onFileDownload}
+            >
+              <img src={downloadLogo} alt="downloadLogo" />
+            </Button>}
+          <Button
+            color="danger"
+            outline
+            onClick={(e) => onDeleteHandler(e)}
+            className={btnDeleteClasses}>
+            <img src={deleteLogo} alt="deleteLogo" />
+          </Button>
+        </div>}
       </Link>
     </li>
   )

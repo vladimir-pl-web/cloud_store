@@ -17,17 +17,17 @@
 
             &:first-child {
                 width: 400px;
-                justify-self: center
+                justify-self: start
             }
 
             ;
 
             &:nth-child(2n+2) {
-                justify-self: end;
+                justify-self: center;
             }
 
             &:nth-child(2n+3) {
-                justify-self: end;
+                justify-self: center;
             }
 
             &:last-child {
