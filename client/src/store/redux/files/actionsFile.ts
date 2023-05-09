@@ -1,4 +1,4 @@
-import { ISort, setSortType, SET_SORT } from './../../../utils/types';
+import { ISort, IView, setSortType, setViewType, SET_SORT, SET_VIEW } from './../../../utils/types';
 import { v4 as uuidv4 } from 'uuid';
 import { $CombinedState, Dispatch } from "redux";
 import { createFolder, creds, getFiles, instance,downloadFile, deleteFile} from "../../../api/api";
@@ -40,6 +40,10 @@ export const pushAllDirs = (payload: Array<string | null>):setPushAllDirs => {
  
 export const setSort = (payload: ISort): setSortType => {
   return { type: SET_SORT, payload }
+}
+ 
+export const setView = (payload: IView): setViewType => {
+  return { type: SET_VIEW, payload }
  }
 
 export const fetchAllFolders = (dirId: string | null, sorts: ISort, search?:string)=>  async(dispatch:Dispatch)=> {

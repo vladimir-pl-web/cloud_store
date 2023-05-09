@@ -31,7 +31,7 @@ const SearchFile = () => {
      />
      <Button
        onClick={onSearchFetch}
-       color="primary">
+       color="info">
     Search File
   </Button>
 </InputGroup>

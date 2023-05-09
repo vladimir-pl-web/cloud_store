@@ -55,11 +55,13 @@ export const PUSH_ALL_DIRS = "PUSH_ALL_DIRS"
 export const POP_FROM_STACK = "POP_FROM_STACK"
 export const HANDLE_MESSAGE = "HANDLE_MESSAGE"
 export const SET_SORT = "SET_SORT"
+export const SET_VIEW = "SET_VIEW"
 
 
 export type IFiles = typeof defaultFilesState
 export type IMessage = { status: string, text: string }
 export type IColumn = "name" | "date" | "type" | "size"
+export type IView = "list" | "plate"
 export type ISort = {
  sort: string
  dir: 1 | -1
@@ -68,6 +70,10 @@ export type ISort = {
 export interface setFilesType {
  type: typeof SET_FILES
  payload: Array<IFolder>
+}
+export interface setViewType {
+ type: typeof SET_VIEW
+ payload: IView
 }
 export interface setPushAllDirs {
  type: typeof PUSH_ALL_DIRS
@@ -104,7 +110,7 @@ export interface setSortType {
  payload: ISort
 }
 
-export type filesActionsType = setFilesType | setDirType | setPushToStack | setLoadingType | setCreateFolderType | setPopupDisplayType | setPushAllDirs | setHandleMessage | setDeleteFileType |setSortType
+export type filesActionsType = setFilesType | setDirType | setPushToStack | setLoadingType | setCreateFolderType | setPopupDisplayType | setPushAllDirs | setHandleMessage | setDeleteFileType | setSortType | setViewType
 export interface IFolder {
  name: string
  type: string

@@ -1,0 +1,39 @@
+.uploadFile {
+  background-color: #E9E6E6;
+  border-radius: 8px;
+  margin: 5px 0;
+  padding: 5px 10px;
+}
+
+.uploadFile .header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.uploadFile .progressBar {
+  height: 1rem;
+  border-radius: 8px;
+  background-color: #566885;
+  display: flex;
+  margin: 3px 0;
+  position: relative;
+}
+
+.uploadFile .progressBar .uploadBar {
+  height: 1rem;
+  border-radius: 8px;
+  background-color: green;
+  display: flex;
+}
+
+.uploadFile .progressBar .uploadPercent {
+  z-index: 1000;
+  color: black;
+  font-weight: 800;
+  font-size: 12px;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%);
+  position: absolute;
+}
+/*# sourceMappingURL=uploadFile.module.css.map */

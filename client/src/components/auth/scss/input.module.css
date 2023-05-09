@@ -1,0 +1,52 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.wrapper .input {
+  border: none;
+  border-bottom: #566885 solid 3px;
+  background: transparent;
+  width: 100%;
+  padding: 5px;
+}
+
+.wrapper .input:focus {
+  outline: none;
+  transform: scale(1.01);
+}
+
+.wrapper ::-webkit-input-placeholder {
+  /* Chrome */
+  color: #566885;
+  font-weight: 700;
+}
+
+.wrapper :-ms-input-placeholder {
+  /* IE 10+ */
+  color: #566885;
+  font-weight: 700;
+}
+
+.wrapper ::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #566885;
+  font-weight: 700;
+}
+
+.wrapper :-moz-placeholder {
+  /* Firefox 4 - 18 */
+  color: #566885;
+  font-weight: 700;
+}
+
+.wrapper .error {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%);
+  color: red;
+  font-size: 16px;
+}
+/*# sourceMappingURL=input.module.css.map */

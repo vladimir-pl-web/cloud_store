@@ -1,50 +1,66 @@
-.fileList{
- width: 100%;
- padding: 30px;
- box-sizing: border-box;
-  .header{
-background: #cff4fc;
-//border: 1px solid red;
-grid-template-columns: 2fr repeat(3, 1fr);
-display: grid;
- 
-   list-style: none;
-   
-   li{
-   //background: chartreuse;
-   border:none;
-   width: 200px;
+.fileList {
+    width: 100%;
+    padding: 30px;
+    box-sizing: border-box;
+    .header {
+        background: #cff4fc;
+        grid-template-columns: 2fr repeat(3, 1fr);
+        display: grid;
+
+        list-style: none;
+
+        li {
+            border: none;
+            width: 200px;
+            display: flex;
+            justify-content: space-between;
+
+            &:first-child {
+                width: 400px;
+                justify-self: center
+            }
+
+            ;
+
+            &:nth-child(2n+2) {
+                justify-self: end;
+            }
+
+            &:nth-child(2n+3) {
+                justify-self: end;
+            }
+
+            &:last-child {
+                justify-self: end;
+            }
+
+            ;
+        }
+    }
+}
+
+.list{
+
+}
+
+.listPlate{
     display: flex;
-    justify-content: space-between;
-    &:first-child{
-        width: 400px;
-    };
-    &:nth-child(2n+2){
-        // grid-column-start:2;
-        justify-self: end;
-    }
-    &:nth-child(2n+3){
-        // grid-column-start:3;
-        justify-self: end;
-    }
-    &:last-child{
-     justify-self: end;
-    };
-   }
-  }
- }
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 
- .animEnterActive{
+.animEnterActive {
     animation: animEnter 5000ms forwards;
- }
+}
 
- @keyframes animEnter{
-    0%{
+@keyframes animEnter {
+    0% {
         opacity: 0;
         transform: translateY(-50%);
     }
-    100%{
+
+    100% {
         opacity: 1;
         transform: translateY(0);
     }
- }
+}

@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useAppSelector } from "../../../hooks/hooks";
 import { IFolder } from "../../../utils/types";
-import FileDir from "./file/file";
 import classes from "./fileList.module.scss";
-import Files from "./files/files";
-import { CSSTransition, Transition, TransitionGroup } from "react-transition-group";
+import clsx from "clsx";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "./fileList.module.scss";
-import { Badge, ListGroup, ListGroupItem } from "reactstrap";
+import { ListGroup, ListGroupItem } from "reactstrap";
 import ArrowBtns from "./arrowBtns/arrowBtbs";
+import FileListItem from "./file/file";
 
 
 
@@ -15,11 +15,8 @@ const FileList = () => {
   //const [isElements, setIsElements] = useState<boolean>(true);
   const [anim, setAnim] = useState<boolean>(true);
   const ref = useRef(null)
+  const { view } = useAppSelector(state => state.files)
 
-  useEffect(() => {
-    console.log("initRender")
-  }, []);
-  
   const headers = useMemo(() => {
     return [
       { id: 1, value: "Name", name: "name" },
@@ -32,7 +29,7 @@ const FileList = () => {
   const fls = useAppSelector((state) => state.files.files);
 
   const hdrs = useMemo(() => {
-    return headers.map((el:any ) => {
+    return headers.map((el: any) => {
       return <ListGroupItem
         color="info"
         key={el.id}
@@ -56,19 +53,26 @@ const FileList = () => {
             //exitActive:classes["fade-exit-active"]}
             exit={false}
           >
-            <FileDir file={file} setAnim={setAnim} />
+            <FileListItem file={file} setAnim={setAnim} />
           </CSSTransition>
         );
       })
     );
   }, [fls]);
 
+  const listClasses = useMemo(() => {
+    return clsx({
+      [classes.list]: view === "list",
+      [classes.listPlate]: view === "plate",
+    });
+  }, [classes.list, classes.listPlate, view]);
+
   return (
     <div className={classes.fileList}>
-      <ListGroup  className={classes.header} horizontal>{hdrs}</ListGroup>
-        <TransitionGroup component={"ul"}>
-          {files}
-        </TransitionGroup>
+      <ListGroup className={classes.header} horizontal>{hdrs}</ListGroup>
+      <TransitionGroup component={"ul"} className={listClasses}>
+        {files}
+      </TransitionGroup>
     </div>
   );
 };

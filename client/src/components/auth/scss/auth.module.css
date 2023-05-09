@@ -1,0 +1,42 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  align-items: center;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px 40px;
+  align-self: center;
+  margin-top: 100px;
+}
+
+.form .header {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.form input {
+  margin: 20px 20px;
+}
+
+.form .btn {
+  border: none;
+  background-color: #566885;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  padding: 5px 10px;
+  align-self: flex-end;
+  margin-top: 10px;
+  transition: box-shadow ease-in-out .3s;
+  cursor: pointer;
+}
+
+.form .btn:hover {
+  box-shadow: rgba(53, 50, 50, 0.3) 0px 19px 38px, rgba(54, 53, 53, 0.22) 0px 15px 12px;
+}
+
+.form .btn :focus {
+  box-shadow: none;
+}
+/*# sourceMappingURL=auth.module.css.map */

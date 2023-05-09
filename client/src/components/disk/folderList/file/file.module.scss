@@ -1,18 +1,28 @@
 .file {
   margin: 10px 0;
-  border-bottom: solid 2px #566885;
+  border-bottom: solid 2px blue;
   list-style: none;
   .link {
+    grid-template-columns: 2fr repeat(3, 1fr);
     display: grid;
-    grid-template-columns: 1fr 4fr repeat(4, 1fr);
     align-items: center;
-    justify-content: space-between;
-    .name {
+    .nameWrap{
+      width: 400px;
+      display: flex;
+      justify-self: flex-start;
+      background-color: aqua;
+      align-items: center;
+      .name {
+        margin-left: 40px;
+        background-color: aliceblue;
+      }
+  
+      .img {
+        margin-left: 10px;
+        cursor: pointer;
+      }
     }
-    .img {
-      justify-self: center;
-      cursor: pointer;
-    }
+
 
     .created {
       grid-column-start: 5;
@@ -23,6 +33,7 @@
       grid-column-start: 6;
       justify-self: center;
     }
+    wrap{}
 
     .btnDownload,
     .btnDelete {
@@ -31,6 +42,7 @@
       width: 40px;
       border-radius: 25px;
       cursor: pointer;
+
       img {
         height: 12px;
         width: 12px;
@@ -40,11 +52,14 @@
     .btnDownload {
       grid-column-start: 3;
     }
+
     .btnDelete {
       grid-column-start: 4;
     }
+
     &:hover {
       transform: scale(1.02);
+
       .btnDownload {
         display: block;
         grid-column-start: 3;
@@ -57,6 +72,55 @@
         grid-column-start: 4;
         justify-self: start;
         margin-left: 5px;
+      }
+    }
+  }
+}
+
+.filePlate {
+  margin: 10px 20px;
+  list-style: none;
+  height: 150px;
+  width:150px;
+
+  .linkPlate {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    .namePlate {text-align: center;}
+
+    .imgPlate {
+      width: 120px;
+      height:120px;
+      cursor: pointer;
+    }
+.wrapPlate{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+    .btnDownloadPlate,
+    .btnDeletePlate {
+      display: none;
+      height: 40px;
+      width: 40px;
+      border: none;
+      cursor: pointer;
+    
+    }
+
+    &:hover {
+      transform: scale(1.02);
+
+      .btnDownloadPlate {
+        display: block;
+      }
+
+      .btnDeletePlate {
+        display: block;
       }
     }
   }

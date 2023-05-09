@@ -1,11 +1,12 @@
 import classes from './file.module.scss'
+import clsx from "clsx";
 import folderLogo from '../../../../assets/images/folder.svg'
 import fileLogo from '../../../../assets/images/file.svg'
 import downloadLogo from '../../../../assets/images/download.svg'
 import deleteLogo from '../../../../assets/images/delete.svg'
 import { IFolder } from '../../../../utils/types'
 import { useActions, useAppSelector } from '../../../../hooks/hooks'
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Messages } from '../../../../utils/enums'
 import { displayNotification, fileSize } from '../../../../utils/utils'
 import { Link, useParams } from 'react-router-dom'
@@ -17,10 +18,10 @@ interface IFiles {
   file: IFolder
   setAnim: (anim: boolean) => void
 }
-const FileDir: React.FC<IFiles> = ({ file, setAnim }) => {
+const FileListItem: React.FC<IFiles> = ({ file, setAnim }) => {
   const { setDir, fetchDeleteFle, pushToStack, fetchDownloadFle } = useActions()
   const { name, created, size, type, _id } = file
-  const { currentDir, message } = useAppSelector(state => state.files)
+  const { currentDir, message, view } = useAppSelector(state => state.files)
   const { status, text } = message
   const { id } = useParams()
   const param = id ? "disk/:" : ""
@@ -45,29 +46,83 @@ const FileDir: React.FC<IFiles> = ({ file, setAnim }) => {
     fetchDeleteFle(file)
   }
 
+  const fileClasses = useMemo(() => {
+    return clsx({
+      [classes.file]: view === "list",
+      [classes.filePlate]: view === "plate",
+    });
+  }, [classes.file, classes.filePlate, view]);
+
+  const nameClasses = useMemo(() => {
+    return clsx({
+      [classes.name]: view === "list",
+      [classes.namePlate]: view === "plate",
+    });
+  }, [classes.name, classes.namePlate, view]);
+
+  const linkClasses = useMemo(() => {
+    return clsx({
+      [classes.link]: view === "list",
+      [classes.linkPlate]: view === "plate",
+    });
+  }, [classes.link, classes.linkPlate, view]);
+
+  const imgClasses = useMemo(() => {
+    return clsx({
+      [classes.img]: view === "list",
+      [classes.imgPlate]: view === "plate",
+    });
+  }, [classes.img, classes.imgPlate, view]);
+
+  const btnDownloadClasses = useMemo(() => {
+    return clsx({
+      [classes.btnDownload]: view === "list",
+      [classes.btnDownloadPlate]: view === "plate",
+    });
+  }, [classes.btnDownload, classes.btnDownloadPlate, view]);
+
+  const btnDeleteClasses = useMemo(() => {
+    return clsx({
+      [classes.btnDelete]: view === "list",
+      [classes.btnDeletePlate]: view === "plate",
+    });
+  }, [classes.btnDelete, classes.btnDeletePlate, view]);
+
+  const wrapClasses = useMemo(() => {
+    return clsx({
+      [classes.wrap]: view === "list",
+      [classes.wrapPlate]: view === "plate",
+    });
+  }, [classes.wrap, classes.wrapPlate, view]);
+
   return (
-    
-    <li className={classes.file} onClick={() => onOpenFolder()}>
-          <Link to={`disk/:${name}/`} className={classes.link} >
-            <img src={type === 'dir' ? folderLogo : fileLogo} alt="item" className={classes.img} />
-            <div className={classes.name}>{name}</div>
-            {file.type !== 'dir' &&
-              <button
-                className={classes.btnDownload}
-                onClick={onFileDownload}
-              >
-                <img src={downloadLogo} alt="logo" />
-              </button>}
-            <button
-              onClick={(e) => onDeleteHandler(e)}
-              className={classes.btnDelete}>
-              <img src={deleteLogo} alt="logo" />
-            </button>
-            <div className={classes.created}>{created.slice(0, 10)}</div>
-            <div className={classes.size}>{fileSize(size)}</div>
-          </Link>
+
+    <li className={fileClasses} onClick={() => onOpenFolder()}>
+      <Link to={`disk/:${name}/`} className={linkClasses} >
+        <div className={classes.nameWrap}>
+        <img src={type === 'dir' ? folderLogo : fileLogo} alt="item" className={imgClasses} />
+        <div className={nameClasses}>{name}</div>
+        </div>
+        <div className={wrapClasses}>
+        {file.type !== 'dir' &&
+          <button
+            className={btnDownloadClasses}
+            onClick={onFileDownload}
+          >
+            <img src={downloadLogo} alt="downloadLogo" />
+          </button>}
+        <button
+          onClick={(e) => onDeleteHandler(e)}
+          className={btnDeleteClasses}>
+          <img src={deleteLogo} alt="deleteLogo" />
+          </button>
+          </div>
+        {view === "list" && <div className={classes.created}>{created.slice(0, 10)}</div>}
+        {view === "list" && <div className={classes.size}>{fileSize(size)}</div>}
+        {view === "list" && <div className={classes.size}>{type}</div>}
+      </Link>
     </li>
   )
 }
 
-export default FileDir
+export default FileListItem
