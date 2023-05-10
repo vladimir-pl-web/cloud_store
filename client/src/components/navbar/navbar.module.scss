@@ -1,20 +1,44 @@
 @import "../../utils/colors.scss";
 
-.navbar{
-display: flex;
-height: 50px;
-justify-content: center;
-width: 100%;
- .logo{
+.navbar {
+ display: flex;
+ height: 50px;
+ padding: 10px 0;
+ justify-content: center;
+ width: 100%;
+ .btnMenu {
+  width: 40px;
+  height: 30px;
+  margin-right: 10px;
+  display: none;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  border: none;
 
+  img {
+   height: 30px;
+  }
+  @media (max-width: 992px) {
+   display: flex;
+   }
  }
- .header{
+
+ .logo {}
+
+ .header {
   margin-left: 10px;
   font-size: 24px;
   font-weight: 700;
+  @media (max-width: 540px) {
+    font-size: 16px;
+    background-color: blueviolet;
+  }
  }
- .login{
+
+ .login {
   margin-left: auto;
   cursor: pointer;
+  color:black;
  }
 }

@@ -1,0 +1,17 @@
+.sidebar{
+ width: 350px !important;
+ .header{
+  width: 350px;
+ }
+ .body{
+  width: 350px;
+  ul{
+   li{
+    height: 120px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #0dcaf0;
+   }
+  }
+ }
+}

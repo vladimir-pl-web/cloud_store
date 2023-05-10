@@ -11,22 +11,8 @@
   justify-content: space-between;
   margin-top: 20px;
   height: 40px;
-  .back{
-   margin-right: 10px;
-  }
-  .create{
-   color: black;
-  }
-  .upload{
-   margin-left: 10px;
-   border: 2px dashed #0dcaf0;
-   color: black;
-   .label{
-    cursor: pointer;
-   }
-   input{
-    display: none;
-   }
+  @media (max-width: 992px) {
+  display: none;
   }
  }
 }
@@ -44,5 +30,4 @@
 .mainGroup{
  width: 60%;
  display: flex;
- 
 }

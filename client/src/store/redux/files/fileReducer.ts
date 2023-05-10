@@ -16,7 +16,7 @@ export const defaultFilesState = {
     sort: "date",
     dir: 1
   } as ISort,
-  view: "list"
+  view: "plate"
 }
 
 export const fileReducer = (state = defaultFilesState, action: filesActionsType): IFiles => {

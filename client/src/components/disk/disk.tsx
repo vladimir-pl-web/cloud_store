@@ -1,9 +1,7 @@
 
 import { ChangeEvent, useEffect, useState, DragEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Col, FormGroup, Input, Label } from 'reactstrap';
 import { useActions, useAppSelector } from '../../hooks/hooks';
-import backLogo from '../../assets/images/back.svg'
 import Loader from '../loader/loader';
 import classes from './disk.module.scss'
 import FolderList from './folderList/folderList';
@@ -11,14 +9,24 @@ import Popup from './popup/popup';
 import SearchFile from './search/search';
 import Uploader from './uploader/uploader';
 import ViewFile from './viewFile/viewFile';
+import PlateViewSort from '../plateViewSort/plateViewSort';
+import Sidebar from '../sidebar/sidebar';
+import Buttons from './buttons/buttonst';
+import { Button, FormGroup, Input, Label } from 'reactstrap';
 
-const Disk = () => {
+
+export interface IDisk  {
+   openSide: boolean;
+   setOpenSide: (open: boolean) => void
+}
+
+const Disk: React.FC<IDisk> = ({ setOpenSide, openSide }) => {
    const navigate = useNavigate()
    const { fetchAllFolders, setPopupDisplay, pushAllDirs, setDir, fetchUploadFle } = useActions()
-   const { currentDir, dirStack, sorts } = useAppSelector(state => state.files)
+   const { currentDir, dirStack, sorts, view } = useAppSelector(state => state.files)
    const isLoading = useAppSelector(state => state.users.isLoading)
    const [dragEnter, setDragEnter] = useState<boolean>(false)
-
+   const isLength = !!dirStack.length
    useEffect(() => {
       navigate("/disk")
    }, [])
@@ -40,6 +48,7 @@ const Disk = () => {
    }
 
    const onFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
+      console.log("target")
       //@ts-ignore
       const files = [...e.target.files]
 
@@ -81,32 +90,22 @@ const Disk = () => {
          {!isLoading &&
             <div className={classes.btns}>
                <div className={classes.mainGroup}>
-                  {dirStack.length ? <Button
-                     color="info"
-                     outline
-                     className={classes.back}
-                     onClick={() => onBackHandler()}>
-                     <img src={backLogo} alt="backLogo" />
-                  </Button> : ""}
-                  <Button
-                     color="info"
-                     outline
-                     onClick={onCreate}
-                     className={classes.create}
-                  >Create Folder</Button>
-                  <Button
-                     color="info"
-                     outline
-                     className={classes.upload}>
-                     <label htmlFor="upload_input" className={classes.label}></label>
-                     <input multiple={true} onChange={(e) => onFileUpload(e)} type="file" id="upload_input" />
-                     Upload File
-                  </Button>
+                  <Buttons isLength={isLength} onCreate={onCreate} onBackHandler={onBackHandler} onFileUpload={onFileUpload} />
                   <SearchFile />
                </div>
+               {view === "plate" && <PlateViewSort />}
                <ViewFile />
             </div>}
          {isLoading ? <Loader /> : <FolderList />}
+         <Sidebar
+            setOpenSide={setOpenSide}
+            openSide={openSide}
+            isLength={isLength}
+            onCreate={onCreate}
+            onBackHandler={onBackHandler}
+            onFileUpload={onFileUpload}
+
+         />
          <Popup />
          <Uploader />
 

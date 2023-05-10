@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
 import classes from './app.module.scss';
@@ -18,6 +18,7 @@ const App: FC = () => {
   const userError = useAppSelector(state => state.users.errorMessage)
   const isAuth = useAppSelector(state => state.users.isAuth)
   const { setUserError, fetchInitAuth } = useActions()
+  const[openSide,setOpenSide]=useState<boolean>(false)
 
   useEffect(() => {
     if (userError) {
@@ -35,7 +36,7 @@ const App: FC = () => {
       <Container
         fluid="md"
         className={classes.app}>
-        <Navbar loading={loading} />
+        <Navbar loading={loading} setOpenSide={setOpenSide} />
         {!isAuth ?
           <>
             {
@@ -51,10 +52,10 @@ const App: FC = () => {
             }
           </> :
           <Routes>
-            <Route path="/disk/:id/:id/:id" element={<Disk />} />
+            <Route path="/disk/:id/:id/:id" element={<Disk openSide={openSide} setOpenSide={setOpenSide} />} />
               {/* <Route index element={<Disk />} />
               <Route path="id/" element={<Disk />} /> */}
-            <Route path="*" element={<Disk />} />
+            <Route path="*" element={<Disk openSide={openSide} setOpenSide={setOpenSide}/>} />
           </Routes>}
         <ToastContainer
           position="top-right"

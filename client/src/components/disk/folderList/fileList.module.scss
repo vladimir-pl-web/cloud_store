@@ -2,11 +2,12 @@
     width: 100%;
     padding: 30px 0;
     box-sizing: border-box;
+
     .header {
         background: #cff4fc;
         grid-template-columns: 2fr repeat(3, 1fr);
         display: grid;
-
+        width: 100%;
         list-style: none;
 
         li {
@@ -15,39 +16,96 @@
             display: flex;
             justify-content: space-between;
 
-            &:first-child {
-                width: 400px;
-                justify-self: start
+            @media (max-width: 1200px) {
+                width: 150px;
             }
 
-            ;
+            @media (max-width: 992px) {
+                width: 150px;
+            }
+
+            @media (max-width: 768px) {
+                width: 110px;
+            }
+
+            @media (max-width: 600px) {
+                width: 130px;
+            }
+
+            @media (max-width: 540px) {
+                width: 110px;
+                font-size: 14px;
+            }
+
+            &:first-child {
+                width: 400px;
+                justify-self: start;
+
+                @media (max-width: 992px) {
+                    width: 250px;
+                }
+
+                @media (max-width: 540px) {
+                    width: 160px;
+                }
+
+                @media (max-width: 380px) {
+                    width: 100px;
+
+                }
+            }
 
             &:nth-child(2n+2) {
                 justify-self: center;
+
+                @media (max-width: 992px) {
+                    justify-self: start;
+                }
+
+                @media (max-width: 600px) {}
             }
 
             &:nth-child(2n+3) {
                 justify-self: center;
+
+                @media (max-width: 992px) {
+                    justify-self: start;
+                }
+
+                @media (max-width: 600px) {
+                    justify-self: end;
+                    width: 80px;
+                }
             }
 
             &:last-child {
                 justify-self: end;
+
+                @media (max-width: 600px) {
+                    display: none;
+                }
             }
 
             ;
         }
+
+        @media (max-width: 600px) {
+            grid-template-columns: 2fr repeat(2, 1fr);
+        }
     }
 }
 
-.list{
+.list {}
 
-}
-
-.listPlate{
+.listPlate {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: 50px;
+    @media (max-width: 540px) {
+        width: 100%;
+        justify-content: center;
+      }
 }
 
 .animEnterActive {
