@@ -76,10 +76,12 @@
 }
 
 .filePlate {
-  margin: 10px 20px;
+  margin: 20px 0;
   list-style: none;
   height: 150px;
   width:150px;
+  display: flex;
+  justify-content: flex-start;
 
   .linkPlate {
     display: flex;
@@ -90,7 +92,7 @@
     .namePlate {text-align: center;}
 
     .imgPlate {
-      width: 120px;
+      width: fit-content;
       height:120px;
       cursor: pointer;
     }

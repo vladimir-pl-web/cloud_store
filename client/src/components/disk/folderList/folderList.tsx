@@ -69,7 +69,7 @@ const FileList = () => {
 
   return (
     <div className={classes.fileList}>
-      <ListGroup className={classes.header} horizontal>{hdrs}</ListGroup>
+      { view === "list" && <ListGroup className={classes.header} horizontal>{hdrs}</ListGroup>} 
       <TransitionGroup component={"ul"} className={listClasses}>
         {files}
       </TransitionGroup>

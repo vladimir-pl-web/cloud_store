@@ -11,6 +11,7 @@ import { displayNotification } from './utils/utils';
 import { useActions, useAppSelector } from './hooks/hooks';
 import Disk from './components/disk/disk';
 import { Messages } from './utils/enums';
+import { Container } from 'reactstrap';
 
 const App: FC = () => {
   const loading = useAppSelector(state => state.users.isLoading)
@@ -31,7 +32,9 @@ const App: FC = () => {
 
   return (
     <BrowserRouter>
-      <div className={classes.app}>
+      <Container
+        fluid="md"
+        className={classes.app}>
         <Navbar loading={loading} />
         {!isAuth ?
           <>
@@ -63,7 +66,7 @@ const App: FC = () => {
           pauseOnHover
         />
 
-      </div>
+      </Container>
     </BrowserRouter>
 
   );

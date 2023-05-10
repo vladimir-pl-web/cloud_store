@@ -3,7 +3,7 @@
  justify-content: flex-start;
  align-items: flex-start;
  flex-direction: column;
- width: 90%;
+ width: 100%;
  height: calc(100vh - 100px);
  .btns{
   display: flex;
@@ -11,8 +11,10 @@
   justify-content: space-between;
   margin-top: 20px;
   height: 40px;
+  .back{
+   margin-right: 10px;
+  }
   .create{
-   margin-left: 10px;
    color: black;
   }
   .upload{
