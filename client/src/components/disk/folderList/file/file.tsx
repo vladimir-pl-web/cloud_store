@@ -44,6 +44,7 @@ const FileListItem: React.FC<IFiles> = ({ file, setAnim }) => {
 
   const onDeleteHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation()
+    e.preventDefault()
     fetchDeleteFle(file)
   }
 

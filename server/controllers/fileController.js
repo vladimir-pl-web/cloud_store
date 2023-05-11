@@ -4,6 +4,22 @@ import config from 'config'
 import fs from 'fs'
 import fileService from '../services/fileService.js'
 
+
+const setFolderSize = async (dir, parent, s) => {
+    try{
+    const file = await File.findOne({ _id: parent })
+    if (file) {
+        const updatedSize = dir === "plus"? file.size + s : file.size - s
+        const updatedFolder = await File.findOneAndUpdate({ _id: parent }, { size: updatedSize, uploaded: s },{new:true})
+        if (updatedFolder.parent) {
+            setFolderSize(dir, updatedFolder.parent, updatedFolder.uploaded)
+        }
+    }
+    } catch (e) {
+        console.log(e, "errrrrrr")
+}
+}
+
 class FileController {
     async createDir(req, res) {
         try {
@@ -30,38 +46,38 @@ class FileController {
     }
 
     async getFiles(req, res) {
-        const { sort, dir, search} = req.query
+        const { sort, dir, search } = req.query
         try {
             let files
             if (search) {
                 const fls = await File.find({ user: req.user.id })
                 const result = fls.filter((el) => el.name.includes(search))
-                return res.json({ files:result })
+                return res.json({ files: result })
             }
             switch (sort) {
                 case "name":
-                     files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ name: dir })
-                     break
+                    files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ name: dir })
+                    break
                 case "type":
-                     files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ type: dir })
-                     break
+                    files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ type: dir })
+                    break
                 case "date":
-                     files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ created: dir })
-                     break
+                    files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ created: dir })
+                    break
                 case "size":
-                     files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ size: dir })
-                     break
+                    files = await File.find({ user: req.user.id, parent: req.query.parent }).sort({ size: dir })
+                    break
                 default:
-                     files = await File.find({ user: req.user.id, parent: req.query.parent })
-                     break
+                    files = await File.find({ user: req.user.id, parent: req.query.parent })
+                    break
             }
-            //const files = await File.find({ user: req.user.id, parent: req.query.parent })
             let file
             if (req.query.parent) {
                 file = await File.findOne({ _id: req.query.parent, user: req.user.id, })
             } else {
                 file = await File.findOne({ parent: null, user: req.user.id, })
             }
+
             return res.json({ files })
         } catch (e) {
             console.log(e)
@@ -105,10 +121,16 @@ class FileController {
                 parent: parent?._id,
                 user: user._id
             })
+
+            if (dbFile.parent) {
+               setFolderSize( "plus", dbFile.parent, dbFile.size) 
+            }
+
             await dbFile.save()
             await user.save()
             return res.status(200).json(dbFile)
         } catch (e) {
+            console.log(e, "upload error")
             return res.status(500).json({
                 e,
                 message: "Upload error"
@@ -144,6 +166,9 @@ class FileController {
             const file = await File.findOne({ _id: req.query.id, user: req.user.id })
             if (!file) {
                 return res.status(404).json({ message: 'File not found' })
+            }
+            if (file.parent && file.type !== 'dir') {
+                setFolderSize("minus", file.parent, file.size)
             }
             fileService.deleteFile(file)
             await file.deleteOne()

@@ -27,6 +27,7 @@ const Disk: React.FC<IDisk> = ({ setOpenSide, openSide }) => {
    const isLoading = useAppSelector(state => state.users.isLoading)
    const [dragEnter, setDragEnter] = useState<boolean>(false)
    const isLength = !!dirStack.length
+
    useEffect(() => {
       navigate("/disk")
    }, [])
@@ -48,7 +49,7 @@ const Disk: React.FC<IDisk> = ({ setOpenSide, openSide }) => {
    }
 
    const onFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
-      console.log("target")
+   
       //@ts-ignore
       const files = [...e.target.files]
 

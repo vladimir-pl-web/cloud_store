@@ -94,7 +94,7 @@ export const fetchUploadFle = (dirId: string | null, file: Blob, name:string) =>
       id: uuidv4()
     }
     dispatch(addUploadedFile(uploadedFile))
-    // const res = await uploadFile(formData, uploadedFile, dispatch)
+
     const res = await instance.post(`files/upload`, formData, {
       headers: { ...creds.headers },
       onUploadProgress: progressEvent => {
@@ -102,7 +102,6 @@ export const fetchUploadFle = (dirId: string | null, file: Blob, name:string) =>
        dispatch(changeUploadedFile({id: uploadedFile.id, progress: +percentCompleted.toFixed()}))
       }
      })
-    console.log(res, "res");
     dispatch(addFile(res.data))
     
   }

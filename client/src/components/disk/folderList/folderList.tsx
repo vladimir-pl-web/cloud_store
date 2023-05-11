@@ -48,7 +48,7 @@ const FileList = () => {
         return (
           <CSSTransition
             key={file._id}
-            timeout={5000}
+            timeout={500}
             classNames={{ enterActive: classes["animEnterActive"] }}
             //exitActive:classes["fade-exit-active"]}
             exit={false}
