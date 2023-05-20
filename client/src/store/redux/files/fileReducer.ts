@@ -4,6 +4,7 @@ import { ADD_FILE, filesActionsType, IFiles, IFolder, SET_DIR, PUSH_TO_STACK, SE
 
 export const defaultFilesState = {
   isLoading: false,
+  loadingAvatar:false,
   files: [] as Array<IFolder>,
   currentDir: null as null | string,
   popupDisplay: false,

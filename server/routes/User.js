@@ -61,13 +61,13 @@ router.post('/login', [
   }
 
   const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: EXPIRES })
-  const { diskSpace, id, usedSpace, files } = user
+  const { diskSpace, id, usedSpace, files,avatar } = user
 
   return res.json({
    message: "Logged in",
    token,
    expiresIn,
-   user_data: { email, diskSpace, id, usedSpace, files }
+   user_data: { diskSpace, id, usedSpace, files, avatar}
   })
 
  }
@@ -78,7 +78,6 @@ router.post('/login', [
 })
 
 router.get('/auth', authMiddleware, async (req, res) => {
- console.log("auth")
  try {
   const user = await User.findOne({_id: req.user.id })
   if (!user) {
@@ -86,14 +85,14 @@ router.get('/auth', authMiddleware, async (req, res) => {
   }
 
   const token = jwt.sign({ id: user.id }, SECRET_KEY, { expiresIn: EXPIRES })
-  const { diskSpace, id, usedSpace, files } = user
+  const { diskSpace, id, usedSpace, files,avatar } = user
   
 
   return res.json({
    message: "Logged in",
    token,
    expiresIn,
-   user_data: { email, diskSpace, id, usedSpace, files }
+   user_data: { diskSpace, id, usedSpace, files,avatar }
   })
 
  }

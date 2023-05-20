@@ -47,4 +47,8 @@ export const deleteFile = async (id: string) => {
  return res
 }
 
+export const deleteAvatar = async () => {
+    const res = await instance.delete(`files/avatar`, creds)
+    return res
+   }
 

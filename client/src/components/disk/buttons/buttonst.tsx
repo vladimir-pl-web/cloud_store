@@ -2,6 +2,7 @@ import { Button } from 'reactstrap'
 import classes from './buttons.module.scss'
 import backLogo from '../../../assets/images/back.svg'
 import { ChangeEvent } from 'react';
+import UploadButton from './uploadButton';
 
 interface IButtons {
  isLength: boolean;
@@ -26,14 +27,7 @@ const Buttons: React.FC<IButtons> = ({ isLength, onBackHandler, onCreate, onFile
     onClick={onCreate}
     className={classes.create}
    >Create Folder</Button>
-   <Button
-    color="info"
-    outline
-    className={classes.upload}>
-    <label htmlFor="upload_input" className={classes.label}>Upload File</label>
-
-    <input multiple={true} style={{ display: "none" }} onChange={(e) => onFileUpload(e)} type="file" id="upload_input" />
-   </Button>
+    <UploadButton title={'Upload File'} onFileUpload={onFileUpload}/>
   </div>
  )
 }

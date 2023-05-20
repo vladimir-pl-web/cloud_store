@@ -1,4 +1,4 @@
-import { ADD_UPLOAD_FILE, CHANGE_UPLOAD_FILE, IUploadedFile, REMOVE_UPLOAD_FILE, setAddFileType, setChangeFileType, setRemoveFileType, setUploaderType, SET_UPLOADER } from './../../../utils/types';
+import { ADD_UPLOAD_FILE, CHANGE_UPLOAD_FILE, IUploadedFile, REMOVE_UPLOAD_FILE, setAddFileType, setChangeFileType, setRemoveFileType, setUploaderType, SET_UPLOADER, SET_AVATAR_LOADING, setAvatarLoadingType } from './../../../utils/types';
 
 
 export const setUploader = (payload: boolean): setUploaderType => {
@@ -7,7 +7,9 @@ export const setUploader = (payload: boolean): setUploaderType => {
   payload
  }
 }
-
+export const setAvatarLoading= (loading: boolean):setAvatarLoadingType  => {
+    return { type: SET_AVATAR_LOADING, payload:loading }
+   }
 export const addUploadedFile = (payload: IUploadedFile): setAddFileType => {
  return {
   type: ADD_UPLOAD_FILE,
@@ -22,7 +24,6 @@ export const removeUploadedFile = (payload: string): setRemoveFileType => {
  }
 }
 export const changeUploadedFile = (payload: { id: string, progress: number }): setChangeFileType => {
- console.log(payload.progress, "progress")
  return {
   type: CHANGE_UPLOAD_FILE,
   payload

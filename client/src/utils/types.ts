@@ -2,14 +2,13 @@
 
 import { defaultFilesState } from "../store/redux/files/fileReducer";
 import { defaultUploaderState } from "../store/redux/upload/uploadReducer";
-import { Messages } from "./enums";
-
 ////users - auth
 export const SET_LOADING = "SET_LOADING";
 export const SET_AUTH = "SET_AUTH";
 export const SET_ERROR = "SET_ERROR"
 export const SET_LOGOUT = "SET_LOGOUT"
 export const SET_DATA = "SET_DATA"
+
 export interface IAuthData {
  email: string
  password: string
@@ -20,6 +19,7 @@ export interface IUser {
  id: string
  diskSpace: number
  usedSpace: number
+ avatar:string
  files: Array<string>
 }
 
@@ -27,6 +27,7 @@ export interface setLoadingType {
  type: typeof SET_LOADING
  payload: boolean
 }
+
 export interface setAuthType {
  type: typeof SET_AUTH
  payload: boolean
@@ -42,7 +43,7 @@ export interface setErrorType {
  type: typeof SET_ERROR
  payload: string
 }
-export type userActionsAuthType = setLoadingType | setAuthType | setErrorType | setLogoutType | setDataType
+export type userActionsAuthType = setLoadingType | setAuthType | setErrorType | setLogoutType | setDataType | setAvatarLoadingType
 
 ////files
 export const SET_FILES = "SET_FILES"
@@ -126,10 +127,18 @@ export interface IFolder {
 
 export type IUploader = typeof defaultUploaderState
 
+export interface IAvaUploader{
+    data:{
+        user: IUser;
+        message:string
+    }
+}
+
 export const SET_UPLOADER = "SET_UPLOADER"
 export const ADD_UPLOAD_FILE = "ADD_UPLOAD_FILE"
 export const REMOVE_UPLOAD_FILE = "REMOVE_UPLOAD_FILE"
 export const CHANGE_UPLOAD_FILE = "CHANGE_UPLOAD_FILE"
+export const SET_AVATAR_LOADING = "SET_AVATAR_LOADING";
 
 export interface IUploadedFile{
  id: string
@@ -141,6 +150,11 @@ export interface setUploaderType {
  type: typeof SET_UPLOADER
  payload:boolean
 }
+
+export interface setAvatarLoadingType {
+    type: typeof SET_AVATAR_LOADING
+    payload: boolean
+   }
 
 export interface setAddFileType {
  type: typeof ADD_UPLOAD_FILE
@@ -154,6 +168,6 @@ export interface setChangeFileType {
  type: typeof CHANGE_UPLOAD_FILE
  payload: {id: string, progress: number}
 }
-export type uploaderActionsType = setUploaderType | setAddFileType | setRemoveFileType |setChangeFileType
+export type uploaderActionsType = setUploaderType | setAddFileType | setRemoveFileType |setChangeFileType | setAvatarLoadingType 
 
 

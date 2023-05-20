@@ -1,11 +1,11 @@
-import { SET_AUTH, SET_DATA, SET_ERROR, SET_LOADING, SET_LOGOUT, userActionsAuthType } from "../../../utils/types"
+import { IUser, SET_AUTH, SET_DATA, SET_ERROR, SET_LOADING, SET_LOGOUT, userActionsAuthType } from "../../../utils/types"
 import { IUsers } from "./actionUsers"
 
 export const defaultUserState = {
   isAuth: false,
   isLoading: false,
-  data: {},
-  errorMessage: ""
+  data: {} as IUser,
+  errorMessage: "",
 }
 
 export const userReducer = (state = defaultUserState, action: userActionsAuthType): IUsers => {
@@ -17,7 +17,7 @@ export const userReducer = (state = defaultUserState, action: userActionsAuthTyp
     case SET_ERROR:
       return { ...state, errorMessage: action.payload }
       case SET_DATA:
-        return { ...state, data: action.payload }
+        return { ...state, data: {...action.payload}}
     case SET_LOGOUT:
       localStorage.removeItem('token')
         return{...state, isAuth: false}

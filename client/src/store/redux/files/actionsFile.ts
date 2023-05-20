@@ -1,10 +1,10 @@
-import { ISort, IView, setSortType, setViewType, SET_SORT, SET_VIEW } from './../../../utils/types';
+import { ISort, IView, setSortType, setViewType, SET_SORT, SET_VIEW, IUser, IAvaUploader } from './../../../utils/types';
 import { v4 as uuidv4 } from 'uuid';
 import { $CombinedState, Dispatch } from "redux";
-import { createFolder, creds, getFiles, instance,downloadFile, deleteFile} from "../../../api/api";
+import { createFolder, creds, getFiles, instance,downloadFile, deleteFile, deleteAvatar} from "../../../api/api";
 import { ADD_FILE, IFolder, setPushToStack, PUSH_TO_STACK, setCreateFolderType, setDirType, setFilesType, setPopupDisplayType, SET_DIR, SET_FILES, SET_POPUP_DISPLAY, PUSH_ALL_DIRS, setPushAllDirs, IMessage, setHandleMessage, HANDLE_MESSAGE, DELETE_FILE, setDeleteFileType } from "../../../utils/types";
-import { setUploader,addUploadedFile, changeUploadedFile } from "../upload/uploaderActions";
-import { setLoading } from "../users/actionUsers";
+import { setUploader,addUploadedFile, changeUploadedFile, setAvatarLoading } from "../upload/uploaderActions";
+import { setData, setLoading } from "../users/actionUsers";
 import { Messages } from '../../../utils/enums';
 import { store } from '../../store';
 
@@ -113,6 +113,34 @@ export const fetchUploadFle = (dirId: string | null, file: Blob, name:string) =>
  console.log(e, "errorFromFileReducer")
   }
   dispatch(setUploader(false))
+}
+
+export const fetchUploadAvatar = (file: Blob)=>async(dispatch:Dispatch)=>{
+  dispatch(setAvatarLoading(true))
+  try{
+    const formData = new FormData()
+    formData.append('file',file)
+    const res:IAvaUploader = await instance.post(`files/avatar`, formData, {
+      headers:{...creds.headers}
+    })
+    dispatch(setData(res.data.user))
+    dispatch(setAvatarLoading(false))
+  }catch(e){
+    console.log(e)
+  }
+  
+}
+
+export const fetchDeleteAvatar = ()=>async(dispatch:Dispatch)=>{
+  console.log("click")
+  dispatch(setAvatarLoading(true))
+  try{
+    const res:IAvaUploader = await deleteAvatar()
+    dispatch(setData(res.data.user))
+  }catch(e){
+    console.log(e)
+  }
+  dispatch(setAvatarLoading(false))
 }
  
 export const fetchDownloadFle = ( id:string, name:string) => async (dispatch: Dispatch) => {

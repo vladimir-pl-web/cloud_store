@@ -3,6 +3,5 @@
  "dbURL": "mongodb+srv://admin:vp12107@cluster0.oilzy.mongodb.net/cloud?retryWrites=true&w=majority",
  "secretWord": "mern-cloud-store",
  "expiresIn": "1d",
- "filePath": "C:/Users/Vovanische/Desktop/mern/cloud_store/server/files"
-}
-
+ "filePath": "C:/Users/Надежда/Desktop/mern/cloud_store/server/files",
+ "staticPath": "C:/Users/Надежда/Desktop/mern/cloud_store/server/static"}

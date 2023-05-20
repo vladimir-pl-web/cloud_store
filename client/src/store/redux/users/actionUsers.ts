@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import { authInitial, sendAuthData } from '../../../api/api';
-import { IAuthData, SET_AUTH, SET_ERROR, SET_LOADING, SET_LOGOUT } from "../../../utils/types";
+import { IAuthData, SET_AUTH, SET_AVATAR_LOADING, SET_ERROR, SET_LOADING, SET_LOGOUT, setAvatarLoadingType } from "../../../utils/types";
 import { IUser, setAuthType, setDataType, setErrorType, setLoadingType, setLogoutType, SET_DATA } from './../../../utils/types';
 import { defaultUserState } from "./userReducer";
 
@@ -18,6 +18,7 @@ export const setAuth = (payload: boolean):setAuthType => {
 }
 
 export const setData = (payload: IUser):setDataType => {
+    console.log(payload, "payload")
  return { type: SET_DATA, payload }
 }
 

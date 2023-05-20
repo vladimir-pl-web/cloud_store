@@ -12,6 +12,7 @@ const app = express()
 app.use(express.json())
 app.use(fileUpload({ }))
 app.use('/api/auth', authRouter)
+app.use(express.static('static'))
 app.use('/api/files', fileRouter)
 app.use(cors())
 
@@ -20,7 +21,7 @@ const start = async () => {
     await mongoose.connect(URL, {
 
     })
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+    app.listen(5000, () => console.log(`Server started on port ${PORT}`))
   }
   catch (e) {
 

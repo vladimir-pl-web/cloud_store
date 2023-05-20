@@ -56,6 +56,7 @@ const Disk: React.FC<IDisk> = ({ setOpenSide, openSide }) => {
       if (files?.length) {
          for (let i = 0; i < files.length; i++) {
             fetchUploadFle(currentDir, files[i], files[i].name)
+            console.log(files[i],"i")
          }
       }
    }
@@ -91,7 +92,11 @@ const Disk: React.FC<IDisk> = ({ setOpenSide, openSide }) => {
          {!isLoading &&
             <div className={classes.btns}>
                <div className={classes.mainGroup}>
-                  <Buttons isLength={isLength} onCreate={onCreate} onBackHandler={onBackHandler} onFileUpload={onFileUpload} />
+                  <Buttons 
+                  isLength={isLength}
+                   onCreate={onCreate}
+                    onBackHandler={onBackHandler}
+                     onFileUpload={onFileUpload} />
                   <SearchFile />
                </div>
                {view === "plate" && <PlateViewSort />}

@@ -3,6 +3,7 @@ import User from '../models/User.js'
 import config from 'config'
 import fs from 'fs'
 import fileService from '../services/fileService.js'
+import { v4 as uuidv4 } from 'uuid';
 
 
 const setFolderSize = async (dir, parent, s) => {
@@ -159,6 +160,39 @@ class FileController {
                 message: "Download error"
             })
         }
+    }
+
+    async uploadAvatar(req,res){
+    
+        try{
+            const file = req.files.file
+            const user = await User.findOne({ _id: req.user.id })
+            const avatarName = uuidv4() + ".jpeg"
+            user.avatar = avatarName
+            file.mv(config.get('staticPath') + "/" + avatarName )
+            console.log(user, "user")
+            await user.save()
+            return res.status(200).json({user, message:"Avatar uploaded"})
+
+        }catch(e){
+            console.log(e, "error")
+            return res.status(400).json({message: 'Upload Avatar Error'})
+        } 
+    }
+
+    async deleteAvatar(req,res){
+        const user = await User.findOne({ _id: req.user.id })
+        try{
+            const user = await User.findOne({ _id: req.user.id })
+            const avatarName = user.avatar
+            fs.unlinkSync(config.get('staticPath') + "/" + avatarName )
+            user.avatar = ""
+            await  user.save()
+            return res.status(200).json({user})
+
+        }catch(e){
+            return res.status(400).json({message: 'Delete Avatar Error'})
+        } 
     }
 
     async deleteFile(req, res) {

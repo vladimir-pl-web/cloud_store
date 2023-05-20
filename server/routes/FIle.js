@@ -9,5 +9,7 @@ router.get("", authMiddleware, fileController.getFiles)
 router.post("/upload", authMiddleware, fileController.uploadFiles)
 router.get("/download", authMiddleware, fileController.downloadFile)
 router.delete("/delete", authMiddleware, fileController.deleteFile)
+router.post("/avatar", authMiddleware, fileController.uploadAvatar)
+router.delete("/avatar", authMiddleware, fileController.deleteAvatar)
 
 export default router

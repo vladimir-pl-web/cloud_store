@@ -10,21 +10,22 @@
   }
  }
 
- .upload {
-  margin-left: 10px;
-  border: 2px dashed #0dcaf0;
-  color: black;
-
-  @media (max-width: 1200px) {
-   font-size: small;
-  }
-
-  .label {
-   cursor: pointer;
-  }
-
-  input {
-   display: none;
-  }
- }
 }
+
+.upload {
+    margin-left: 10px;
+    border: 2px dashed #0dcaf0;
+    color: black;
+  
+    @media (max-width: 1200px) {
+     font-size: small;
+    }
+  
+    .label {
+     cursor: pointer;
+    }
+  
+    input {
+     display: none;
+    }
+   }
