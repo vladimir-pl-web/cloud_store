@@ -15,14 +15,11 @@
   font-weight: 700;
  }
  input {
-  margin: 20px 20px;
+  margin: 10px 0;
 }
 
 .btn{
- border: none;
- background-color: $font-color;
  border-radius: 8px;
- color: white;
  font-weight: 700;
  padding: 5px 10px;
  align-self: flex-end;
@@ -36,4 +33,21 @@
   box-shadow: none;
  }
 }
+}
+
+.group{
+  width:100%;
+  position: relative;
+  input{
+    width:100%;
+  }
+}
+
+.errorMessage{
+  position: absolute;
+  top:75% !important;
+  background-color: transparent !important;
+  color:red !important;
+  border: none;
+  display: inline !important;
 }

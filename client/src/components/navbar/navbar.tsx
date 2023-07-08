@@ -1,14 +1,14 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import classes from "./navbar.module.scss";
 import Logo from "../../assets/images/logo.svg";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { setLogout } from "../../store/redux/users/actionUsers";
 import { Button, Spinner } from "reactstrap";
 import menuLogo from "../../assets/images/menu.svg";
 import avatarLogo from "../../assets/images/avatar.svg";
 import { API_URL } from "../../config";
-import Loader from "../loader/loader";
+
 
 interface INav {
   loading: boolean;
@@ -18,6 +18,7 @@ interface INav {
 const Navbar: React.FC<INav> = ({ loading, setOpenSide }) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const {pathname} = useLocation();
   const isAuth = useAppSelector((state) => state.users.isAuth);
   const isAvatarLoading = useAppSelector(
     (state) => state.uploader.isAvatarLoading
@@ -28,10 +29,8 @@ const Navbar: React.FC<INav> = ({ loading, setOpenSide }) => {
   useEffect(() => {
     if (data) {
       setAvatar(data.avatar);
-      console.log(data.avatar);
     }
   }, [data]);
-  console.log(data, "data");
 
   const userAvatar = avatar ? `${API_URL + avatar} ` : avatarLogo;
 
@@ -40,8 +39,29 @@ const Navbar: React.FC<INav> = ({ loading, setOpenSide }) => {
     navigate("/login");
   };
 
+
+
+  const linksMapped = useMemo(()=>{
+    const authLinks: {name:string, route:string}[]= [
+      {name: "Login", route: "login"},
+      {name: "Register", route: "registration"},
+      {name: "Forgot Password", route: "forgot_password"},
+    ]
+    return authLinks.map((el)=>{
+      return(
+        <div 
+        className={classes.login}
+        style={{display: `${el.route === pathname.split("/")[1] ? "none" : "block"}`}}
+        >
+        {<NavLink to={loading ? "" : `${el.route}`}>{el.name}</NavLink>}
+      </div>
+      )
+    })
+  },[loading, pathname])
+
   return (
     <nav className={classes.navbar}>
+      <div className={classes.logotype}>
       <Button
         color="info"
         outline
@@ -52,17 +72,11 @@ const Navbar: React.FC<INav> = ({ loading, setOpenSide }) => {
         <img src={menuLogo} alt="menuLogo" />
       </Button>
       <img src={Logo} alt="logo" className={classes.logo} />
-      <div className={classes.header}>MERN CLOUD</div>
-      {!isAuth && (
-        <div className={classes.login}>
-          {<NavLink to={loading ? "" : "login"}>Login</NavLink>}
-        </div>
-      )}
-      {!isAuth && (
-        <div className={classes.register}>
-          <NavLink to={loading ? "" : "registration"}>Register</NavLink>
-        </div>
-      )}
+      <div className={classes.header}>PANDA'S ClOUD</div>
+      </div>
+      {!isAuth && <div className={classes.links}>
+        {linksMapped }
+        </div>}
       {isAuth && (
         <Button
           color="danger"

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { token } from '../utils/constants'
-import { IAuthData, ISort } from '../utils/types';
+import { IFormData, ISort } from '../utils/types';
 export const creds = { headers: { Authorization: `Bearer ${token}` } }
 
 export const instance = axios.create({
@@ -8,7 +8,7 @@ export const instance = axios.create({
  withCredentials: true
 })
 
-export const sendAuthData = async (payload: IAuthData, type: string) => {
+export const sendAuthData = async (payload: IFormData, type: string) => {
  const res = await instance.post(`auth${type}`, { ...payload })
  return res
 }

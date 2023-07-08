@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dispatch } from "redux";
 import { authInitial, sendAuthData } from '../../../api/api';
-import { IAuthData, SET_AUTH, SET_AVATAR_LOADING, SET_ERROR, SET_LOADING, SET_LOGOUT, setAvatarLoadingType } from "../../../utils/types";
+import { IFormData, SET_AUTH, SET_AVATAR_LOADING, SET_ERROR, SET_LOADING, SET_LOGOUT, setAvatarLoadingType } from "../../../utils/types";
 import { IUser, setAuthType, setDataType, setErrorType, setLoadingType, setLogoutType, SET_DATA } from './../../../utils/types';
 import { defaultUserState } from "./userReducer";
 
@@ -30,7 +30,7 @@ export const setLogout = ():setLogoutType => {
  return { type: SET_LOGOUT } 
 }
 
-export const fetchAuth = (data: IAuthData, type: string) => async (dispatch:Dispatch)=> {
+export const fetchAuth = (data: IFormData, type: string) => async (dispatch:Dispatch)=> {
 
  dispatch(setLoading(true))
  try {

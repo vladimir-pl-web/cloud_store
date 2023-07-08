@@ -4,8 +4,22 @@
   display: flex;
   height: 50px;
   padding: 10px 0;
-  justify-content: center;
+  justify-content: space-between;
+  .logotype{
+    display: flex;
+    width: 16%;
+    justify-content: space-between;
+    align-items: center;
+    .logo{
+      cursor:pointer
+    }
+  }
   width: 100%;
+  .links{
+    display: flex;
+    width: 15%;
+    justify-content: space-between;
+  }
   .btnMenu {
     width: 40px;
     height: 30px;
@@ -30,8 +44,7 @@
     margin-left: 20px;
   }
   .header {
-    margin-left: 10px;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
 
     @media (max-width: 540px) {
@@ -57,7 +70,4 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  div{
-    
-  }
 }

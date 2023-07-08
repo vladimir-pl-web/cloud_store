@@ -1,65 +1,78 @@
-import { FC, useRef} from "react"
-import classes from './auth.module.scss'
+import { FC } from "react";
+import classes from "./auth.module.scss";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { emailValidation } from '../../../utils/constants'
-import Field from "../input/input";
-import { useLocation } from 'react-router-dom';
-import { IAuthData } from "../../../utils/types";
+import { emailValidation } from "../../../utils/constants";
+import { useLocation } from "react-router-dom";
+import {  IFormData } from "../../../utils/types";
 import { fetchAuth } from "../../../store/redux/users/actionUsers";
 import { useAppDispatch } from "../../../hooks/hooks";
-
+import { Button, Form, FormFeedback, FormGroup, Input } from "reactstrap";
+import { registerRs } from "../../../utils/utils";
 
 interface IAuth {
- title: string
- btnName: string
+  title: string;
+  isPasswordForgotten?: boolean
 }
 
-const Auth: FC<IAuth> = ({ title, btnName }) => {
- const ref = useRef<any>(null)
- const location = useLocation();
- const dispatch = useAppDispatch()
+const Auth: FC<IAuth> = ({ title, isPasswordForgotten=false}) => {
+  const location = useLocation();
+  const dispatch = useAppDispatch();
 
- const {
-  register,
-  formState: { errors },
-  handleSubmit
- } = useForm<IAuthData>({ mode: "onChange" })
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<IFormData>();
+
+  const onSubmit: SubmitHandler<IFormData> = (data) => {
+    dispatch(fetchAuth(data, location.pathname));
+  };
 
 
- const onSubmit: SubmitHandler<IAuthData> = (data) => {
-  dispatch(fetchAuth(data, location.pathname))
- }
 
- return (
-  <form className={classes.form} onSubmit={handleSubmit(onSubmit)} ref={ref}>
-   <h3 className={classes.header}>{title}</h3>
-   <Field
-    {...register('email', {
-     required: 'Required',
-     pattern: {
-      value: emailValidation,
-      message: "Please enter a valid email"
-     }
-    })}
-    placeholder="Enter email"
-    error={errors.email}
-   />
-   <Field
-    {...register('password', {
-     required: 'Required',
-     minLength: {
-      value: 5,
-      message: "Length must be at least 5 symbols"
-     }
-    })}
-    placeholder="Enter password"
-    error={errors.password}
-   />
-   <button type="submit" className={classes.btn}>
-    {btnName}
-   </button>
-  </form>
- )
-}
+  return (
+    <Form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
+      <h3 className={classes.header}>{title}</h3>
+      <FormGroup className={classes.group} >
+        <Input
+          {...registerRs ("email", {
+            required: { value: true, message: "Email required" },
+            pattern: {
+              value: emailValidation,
+              message: "Please enter a valid email",
+            },
+          },register)}
+          placeholder="Enter email"
+          invalid={errors.email ? true : false}
+        />
+        <FormFeedback 
+        className={classes.errorMessage}
+        tooltip>{errors.email?.message}</FormFeedback>
+      </FormGroup>
+      {!isPasswordForgotten && <FormGroup className={classes.group}>
+      <Input
+        {...registerRs("password", {
+          required: { value: true, message: "Password required" },
+          minLength: {
+            value: 5,
+            message: "Password must be at least 5 symbols",
+          },
+        },register)}
+        placeholder="Enter password"
+        invalid={errors.password ? true : false}
+      />
+      <FormFeedback 
+      className={classes.errorMessage}
+      tooltip>{errors.password?.message}</FormFeedback>
+      </FormGroup>}
+      <Button 
+      color='primary'
+      outline
+      className={classes.btn}>
+        Submit
+      </Button>
+    </Form>
+  );
+};
 
-export default Auth
+export default Auth;

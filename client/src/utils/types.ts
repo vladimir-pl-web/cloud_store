@@ -9,9 +9,14 @@ export const SET_ERROR = "SET_ERROR"
 export const SET_LOGOUT = "SET_LOGOUT"
 export const SET_DATA = "SET_DATA"
 
-export interface IAuthData {
- email: string
- password: string
+export interface IFormData {
+ email?: string
+ password?: string
+ name?: string
+}
+
+export interface ICreateFolderData{
+    name:string
 }
 
 export interface IUser {
